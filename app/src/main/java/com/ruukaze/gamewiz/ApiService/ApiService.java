@@ -5,10 +5,10 @@ import retrofit2.http.Headers;
 
 public interface ApiService {
 
-    @Headers({
-            "Accept: application/json",
-            "Content-Type: text/plain"
-    })
-    @GET("/games")
-    Call<List<Game>> getGames();
+//    @Headers({
+//            "Accept: application/json",
+//            "Content-Type: text/plain"
+//    })
+//    @GET("/games")
+//    Call<List<Game>> getGames();
 }
