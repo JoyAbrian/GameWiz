@@ -2,6 +2,7 @@ package com.ruukaze.gamewiz;
 
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentContainerView;
@@ -13,7 +14,7 @@ import com.ruukaze.gamewiz.Fragment.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
     private ImageView home_img, community_img, games_img, profile_img; // FOOTER IMAGES
-
+    private LinearLayout toggle_home, toggle_community, toggle_games, toggle_profile; // FOOTER TOGGLE
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,10 +25,15 @@ public class MainActivity extends AppCompatActivity {
         games_img = findViewById(R.id.games_img);
         profile_img = findViewById(R.id.profile_img);
 
-        home_img.setOnClickListener(v -> inflateHomeFragment());
-        community_img.setOnClickListener(v -> inflateCommunityFragment());
-        games_img.setOnClickListener(v -> inflateGamesFragment());
-        profile_img.setOnClickListener(v -> inflateProfileFragment());
+        toggle_home = findViewById(R.id.toggle_home);
+        toggle_community = findViewById(R.id.toggle_community);
+        toggle_games = findViewById(R.id.toggle_games);
+        toggle_profile = findViewById(R.id.toggle_profile);
+
+        toggle_home.setOnClickListener(v -> inflateHomeFragment());
+        toggle_community.setOnClickListener(v -> inflateCommunityFragment());
+        toggle_games.setOnClickListener(v -> inflateGamesFragment());
+        toggle_profile.setOnClickListener(v -> inflateProfileFragment());
 
         inflateHomeFragment();
     }
