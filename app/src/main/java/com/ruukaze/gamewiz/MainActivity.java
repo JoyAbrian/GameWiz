@@ -5,7 +5,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentContainerView;
 
 import com.ruukaze.gamewiz.Fragment.CommunityFragment;
 import com.ruukaze.gamewiz.Fragment.DiscoverFragment;
