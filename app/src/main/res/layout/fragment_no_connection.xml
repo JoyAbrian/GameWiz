@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#f0f0f0">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:background="@android:color/white"
+        android:paddingVertical="20dp"
+        android:paddingHorizontal="60dp"
+        android:layout_margin="16dp"
+        android:elevation="4dp"
+        android:gravity="center">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/pic_bmo_sad"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Internet Connection"
+            android:layout_marginTop="20dp"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:gravity="center" />
+
+        <Button
+            android:id="@+id/signup_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recoonect"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_background"
+            android:textColor="@android:color/white"
+            android:padding="10dp" />
+    </LinearLayout>
+
+</RelativeLayout>
