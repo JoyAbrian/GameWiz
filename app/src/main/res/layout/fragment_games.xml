@@ -29,7 +29,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center"
-        android:background="#EAEAEA">
+        android:background="#EAEAEA"
+        android:paddingBottom="150dp">
 
         <!--    LIBRARY SECTION -->
         <androidx.cardview.widget.CardView

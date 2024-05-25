@@ -4,13 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    tools:context=".Fragment.BottomNavigationFragment">
+    android:orientation="horizontal">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="20dp"
         app:cardCornerRadius="50dp">
 
         <LinearLayout
@@ -21,6 +20,7 @@
 
             <!--    HOME BUTTON -->
             <LinearLayout
+                android:id="@+id/toggle_home"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -28,6 +28,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/home_img"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/vector_home" />
@@ -41,7 +42,9 @@
 
             </LinearLayout>
 
+            <!--    COMMUNITY BUTTON -->
             <LinearLayout
+                android:id="@+id/toggle_community"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -49,6 +52,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/community_img"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/vector_community" />
@@ -62,7 +66,9 @@
 
             </LinearLayout>
 
+            <!--    MY GAMES BUTTON -->
             <LinearLayout
+                android:id="@+id/toggle_games"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -70,6 +76,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/games_img"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/vector_games" />
@@ -83,7 +90,9 @@
 
             </LinearLayout>
 
+            <!--    PROFILE BUTTON -->
             <LinearLayout
+                android:id="@+id/toggle_profile"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -91,6 +100,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/profile_img"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:src="@drawable/vector_profile" />
@@ -104,11 +114,8 @@
 
             </LinearLayout>
 
-
         </LinearLayout>
 
-
     </androidx.cardview.widget.CardView>
-
 
 </LinearLayout>
