@@ -6,10 +6,10 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.ruukaze.gamewiz.Fragment.CommunityFragment;
-import com.ruukaze.gamewiz.Fragment.DiscoverFragment;
-import com.ruukaze.gamewiz.Fragment.GamesFragment;
-import com.ruukaze.gamewiz.Fragment.ProfileFragment;
+import com.ruukaze.gamewiz.fragments.CommunityFragment;
+import com.ruukaze.gamewiz.fragments.DiscoverFragment;
+import com.ruukaze.gamewiz.fragments.GamesFragment;
+import com.ruukaze.gamewiz.fragments.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
     private ImageView home_img, community_img, games_img, profile_img; // FOOTER IMAGES
