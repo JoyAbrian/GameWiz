@@ -1,13 +1,10 @@
 package com.ruukaze.gamewiz.databaseUtils;
 
-import androidx.annotation.NonNull;
-
 import com.ruukaze.gamewiz.R;
 import com.ruukaze.gamewiz.models.Community;
 import com.ruukaze.gamewiz.models.Library;
 import com.ruukaze.gamewiz.models.User;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class DummyDataGenerator {
