@@ -1,12 +1,12 @@
-package com.ruukaze.gamewiz.DatabaseUtils;
+package com.ruukaze.gamewiz.databaseUtils;
 
 import android.util.Log;
 
-import com.ruukaze.gamewiz.ApiService.ApiService;
-import com.ruukaze.gamewiz.Class.Company;
-import com.ruukaze.gamewiz.Class.Game;
-import com.ruukaze.gamewiz.Class.Genre;
-import com.ruukaze.gamewiz.Class.Platform;
+import com.ruukaze.gamewiz.apiService.ApiService;
+import com.ruukaze.gamewiz.models.Company;
+import com.ruukaze.gamewiz.models.Game;
+import com.ruukaze.gamewiz.models.Genre;
+import com.ruukaze.gamewiz.models.Platform;
 
 import java.util.ArrayList;
 import java.util.List;

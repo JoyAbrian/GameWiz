@@ -1,9 +1,9 @@
-package com.ruukaze.gamewiz.ApiService;
+package com.ruukaze.gamewiz.apiService;
 
-import com.ruukaze.gamewiz.Class.Company;
-import com.ruukaze.gamewiz.Class.Game;
-import com.ruukaze.gamewiz.Class.Genre;
-import com.ruukaze.gamewiz.Class.Platform;
+import com.ruukaze.gamewiz.models.Company;
+import com.ruukaze.gamewiz.models.Game;
+import com.ruukaze.gamewiz.models.Genre;
+import com.ruukaze.gamewiz.models.Platform;
 
 import java.util.List;
 

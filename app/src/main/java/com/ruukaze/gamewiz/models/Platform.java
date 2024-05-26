@@ -1,4 +1,4 @@
-package com.ruukaze.gamewiz.Class;
+package com.ruukaze.gamewiz.models;
 
 public class Platform {
     private int id;

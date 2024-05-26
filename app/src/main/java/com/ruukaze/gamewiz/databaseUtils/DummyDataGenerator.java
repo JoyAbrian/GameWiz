@@ -1,7 +1,7 @@
-package com.ruukaze.gamewiz.DatabaseUtils;
+package com.ruukaze.gamewiz.databaseUtils;
 
-import com.ruukaze.gamewiz.Class.Library;
-import com.ruukaze.gamewiz.Class.User;
+import com.ruukaze.gamewiz.models.Library;
+import com.ruukaze.gamewiz.models.User;
 
 import java.util.ArrayList;
 

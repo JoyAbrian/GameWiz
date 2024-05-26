@@ -1,4 +1,4 @@
-package com.ruukaze.gamewiz.ApiService;
+package com.ruukaze.gamewiz.apiService;
 
 import androidx.annotation.NonNull;
 

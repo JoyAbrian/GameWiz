@@ -1,4 +1,4 @@
-package com.ruukaze.gamewiz.Fragment;
+package com.ruukaze.gamewiz.fragments;
 
 import android.os.Bundle;
 

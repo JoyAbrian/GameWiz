@@ -1,4 +1,4 @@
-package com.ruukaze.gamewiz.Class;
+package com.ruukaze.gamewiz.models;
 
 public class User {
     private int id;

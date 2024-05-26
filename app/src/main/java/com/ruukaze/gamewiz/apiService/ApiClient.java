@@ -1,4 +1,4 @@
-package com.ruukaze.gamewiz.ApiService;
+package com.ruukaze.gamewiz.apiService;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
