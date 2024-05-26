@@ -3,6 +3,7 @@ package com.ruukaze.gamewiz.databaseUtils;
 import androidx.annotation.NonNull;
 
 import com.ruukaze.gamewiz.R;
+import com.ruukaze.gamewiz.models.Community;
 import com.ruukaze.gamewiz.models.Library;
 import com.ruukaze.gamewiz.models.User;
 
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 public class DummyDataGenerator {
     public static final ArrayList<User> dummyUsers = generateDummyUser();
     public static final ArrayList<Library> dummyLibraries = generateDummyLibrary();
-
+    public static final ArrayList<Community> dummyCommunities = generateDummyCommunity();
 
     public static ArrayList<User> generateDummyUser() {
         ArrayList<User> users = new ArrayList<>();
@@ -195,5 +196,22 @@ public class DummyDataGenerator {
         libraries.add(new Library(19, 1, 27421, "completed"));
 
         return libraries;
+    }
+
+    public static ArrayList<Community> generateDummyCommunity() {
+        ArrayList<Community> communities = new ArrayList<>();
+
+        communities.add(new Community(1, "QuestKeepers", "A community for gamers dedicated to completing quests and challenges.", R.drawable.banner_1, 1));
+        communities.add(new Community(2, "ArcadeLegends", "A haven for fans of classic arcade games to reminisce and discuss their favorites.", R.drawable.banner_1, 5));
+        communities.add(new Community(3, "ConsoleConquerors", "Where console gamers gather to share strategies and dominate the virtual world.", R.drawable.banner_4, 15));
+        communities.add(new Community(4, "PCMasterRace", "For PC gaming enthusiasts who revel in the superiority of the master race.", R.drawable.banner_4, 8));
+        communities.add(new Community(5, "PixelPioneers", "A community of indie game developers pushing the boundaries of pixel art.", R.drawable.banner_3, 10));
+        communities.add(new Community(6, "VirtualVoyagers", "Exploring the vast virtual worlds of MMORPGs and online adventures.", R.drawable.banner_2, 19));
+        communities.add(new Community(7, "StrategySquad", "Where tacticians meet to discuss the nuances of real-time strategy games.", R.drawable.banner_7, 3));
+        communities.add(new Community(8, "Speedrunners", "For gamers who strive for the fastest completion times and world records.", R.drawable.banner_6, 100));
+        communities.add(new Community(9, "RoleplayRealms", "Immerse yourself in fantastical worlds and epic adventures with fellow roleplayers.", R.drawable.banner_6, 65));
+        communities.add(new Community(10, "eSportsElite", "A gathering place for competitive gamers aiming for victory on the global stage.", R.drawable.banner_5, 43));
+
+        return communities;
     }
 }
