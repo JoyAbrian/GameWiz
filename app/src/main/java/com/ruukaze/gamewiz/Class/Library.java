@@ -4,9 +4,9 @@ public class Library {
     private int id;
     private int user_id;
     private int game_id;
-    private int type;
+    private String type;
 
-    public Library(int id, int user_id, int game_id, int type) {
+    public Library(int id, int user_id, int game_id, String type) {
         this.id = id;
         this.user_id = user_id;
         this.game_id = game_id;
@@ -37,11 +37,11 @@ public class Library {
         this.game_id = game_id;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 }

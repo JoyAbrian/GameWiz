@@ -1,11 +1,14 @@
 package com.ruukaze.gamewiz.DatabaseUtils;
 
+import com.ruukaze.gamewiz.Class.Library;
 import com.ruukaze.gamewiz.Class.User;
 
 import java.util.ArrayList;
 
 public class DummyDataGenerator {
     private static final ArrayList<User> dummyUsers = generateDummyUser();
+    private static final ArrayList<Library> dummyLibrary = generateDummyLibrary();
+
     public static ArrayList<User> generateDummyUser() {
         ArrayList<User> users = new ArrayList<>();
 
@@ -134,5 +137,25 @@ public class DummyDataGenerator {
         return users;
     }
 
+    public static ArrayList<Library> generateDummyLibrary() {
+        ArrayList<Library> libraries = new ArrayList<>();
 
+        libraries.add(new Library(1, 1, 11426, "library"));
+        libraries.add(new Library(2, 1, 55057, "library"));
+        libraries.add(new Library(3, 1, 5606, "library"));
+        libraries.add(new Library(4, 1, 1369, "library"));
+        libraries.add(new Library(5, 1, 536, "library"));
+        libraries.add(new Library(6, 1, 1833, "library"));
+        libraries.add(new Library(7, 1, 37034, "library"));
+        libraries.add(new Library(8, 1, 16992, "library"));
+        libraries.add(new Library(9, 1, 16992, "library"));
+        libraries.add(new Library(10, 1, 3025, "library"));
+        libraries.add(new Library(11, 1, 27421, "library"));
+        libraries.add(new Library(12, 1, 20228, "library"));
+        libraries.add(new Library(13, 1, 1942, "library"));
+        libraries.add(new Library(14, 1, 11397, "library"));
+        libraries.add(new Library(15, 1, 1020, "library"));
+
+        return libraries;
+    }
 }
