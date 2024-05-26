@@ -1,14 +1,23 @@
 package com.ruukaze.gamewiz.databaseUtils;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.ruukaze.gamewiz.models.Library;
+import com.ruukaze.gamewiz.models.User;
+
+import java.util.ArrayList;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static String DATABASE_NAME = "GameWiz.db";
     private static final int DATABASE_VERSION = 1;
+
+    public static final String TABLE_USERS = "users";
+    public static final String TABLE_LIBRARY = "library";
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -17,11 +26,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        
+        // CREATE AND INSERT DUMMY USERS
+        db.execSQL("CREATE TABLE " + TABLE_USERS + " (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT UNIQUE, dateOfRegister TEXT, fullname TEXT, email TEXT UNIQUE, password TEXT)");
+        uploadDummyUsers(db);
+
+        // CREATE AND INSERT DUMMY LIBRARY
+        db.execSQL("CREATE TABLE " + TABLE_LIBRARY + " (id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, game_id INTEGER, type TEXT, FOREIGN KEY (user_id) REFERENCES users(id))");
+        uploadDummyLibrary(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_LIBRARY);
+        onCreate(db);
+    }
 
+    private void uploadDummyUsers(SQLiteDatabase db) {
+        ArrayList<User> users = DummyDataGenerator.dummyUsers;
+        for (User user : users) {
+            ContentValues values = new ContentValues();
+            values.put("id", user.getId());
+            values.put("username", user.getUsername());
+            values.put("dateOfRegister", user.getDateOfRegister());
+            values.put("fullname", user.getFullname());
+            values.put("email", user.getEmail());
+            values.put("password", user.getPassword());
+            db.insert(TABLE_USERS, null, values);
+        }
+    }
+
+    private void uploadDummyLibrary(SQLiteDatabase db) {
+        ArrayList<Library> libraries = DummyDataGenerator.dummyLibraries;
+        for (Library library : libraries) {
+            ContentValues values = new ContentValues();
+            values.put("id", library.getId());
+            values.put("user_id", library.getUser_id());
+            values.put("game_id", library.getGame_id());
+            values.put("type", library.getType());
+            db.insert(TABLE_LIBRARY, null, values);
+        }
     }
 }

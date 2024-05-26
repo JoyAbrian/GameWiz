@@ -1,17 +1,17 @@
 package com.ruukaze.gamewiz.databaseUtils;
 
+import androidx.annotation.NonNull;
+
 import com.ruukaze.gamewiz.models.Library;
 import com.ruukaze.gamewiz.models.User;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class DummyDataGenerator {
-    private static final ArrayList<User> dummyUsers = generateDummyUser();
-    private static final ArrayList<Library> dummyLibrary = generateDummyLibrary();
-    private static final ArrayList<Library> dummyWishlist = generateDummyWishlist();
-    private static final ArrayList<Library> dummyPlaying = generateDummyPlaying();
-    private static final ArrayList<Library> dummyPause = generateDummyPause();
-    private static final ArrayList<Library> dummyCompleted = generateDummyCompleted();
+    public static final ArrayList<User> dummyUsers = generateDummyUser();
+    public static final ArrayList<Library> dummyLibraries = generateDummyLibrary();
+
 
     public static ArrayList<User> generateDummyUser() {
         ArrayList<User> users = new ArrayList<>();
@@ -146,52 +146,24 @@ public class DummyDataGenerator {
 
         libraries.add(new Library(1, 1, 11426, "library"));
         libraries.add(new Library(2, 1, 55057, "library"));
+        libraries.add(new Library(3, 1, 143114, "wishlist"));
+        libraries.add(new Library(4, 1, 75235, "wishlist"));
+        libraries.add(new Library(5, 1, 151665, "wishlist"));
+        libraries.add(new Library(6, 1, 217590, "wishlist"));
+        libraries.add(new Library(7, 1, 20228, "playing"));
+        libraries.add(new Library(8, 1, 1942, "playing"));
+        libraries.add(new Library(9, 1, 1020, "playing"));
+        libraries.add(new Library(10, 1, 11397, "playing"));
+        libraries.add(new Library(11, 1, 5606, "pause"));
+        libraries.add(new Library(12, 1, 1369, "pause"));
+        libraries.add(new Library(13, 1, 536, "pause"));
+        libraries.add(new Library(14, 1, 1833, "pause"));
+        libraries.add(new Library(15, 1, 37034, "completed"));
+        libraries.add(new Library(16, 1, 16992, "completed"));
+        libraries.add(new Library(17, 1, 16992, "completed"));
+        libraries.add(new Library(18, 1, 3025, "completed"));
+        libraries.add(new Library(19, 1, 27421, "completed"));
 
         return libraries;
-    }
-
-    public static ArrayList<Library> generateDummyWishlist() {
-        ArrayList<Library> wishlists = new ArrayList<>();
-
-        wishlists.add(new Library(1, 1, 143114, "wishlist"));
-        wishlists.add(new Library(2, 1, 75235, "wishlist"));
-        wishlists.add(new Library(3, 1, 151665, "wishlist"));
-        wishlists.add(new Library(4, 1, 217590, "wishlist"));
-
-        return wishlists;
-    }
-
-    public static ArrayList<Library> generateDummyPlaying() {
-        ArrayList<Library> playings = new ArrayList<>();
-
-        playings.add(new Library(1, 1, 20228, "playing"));
-        playings.add(new Library(2, 1, 1942, "playing"));
-        playings.add(new Library(3, 1, 1020, "playing"));
-        playings.add(new Library(4, 1, 11397, "playing"));
-
-        return playings;
-    }
-
-    public static ArrayList<Library> generateDummyPause() {
-        ArrayList<Library> pauses = new ArrayList<>();
-
-        pauses.add(new Library(5, 1, 5606, "pause"));
-        pauses.add(new Library(6, 1, 1369, "pause"));
-        pauses.add(new Library(7, 1, 536, "pause"));
-        pauses.add(new Library(8, 1, 1833, "pause"));
-
-        return pauses;
-    }
-
-    public static ArrayList<Library> generateDummyCompleted() {
-        ArrayList<Library> completes = new ArrayList<>();
-
-        completes.add(new Library(9, 1, 37034, "completed"));
-        completes.add(new Library(10, 1, 16992, "completed"));
-        completes.add(new Library(11, 1, 16992, "completed"));
-        completes.add(new Library(12, 1, 3025, "completed"));
-        completes.add(new Library(13, 1, 27421, "completed"));
-
-        return completes;
     }
 }

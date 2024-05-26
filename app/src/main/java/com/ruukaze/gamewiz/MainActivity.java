@@ -1,11 +1,14 @@
 package com.ruukaze.gamewiz;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.ruukaze.gamewiz.databaseUtils.DatabaseHelper;
 import com.ruukaze.gamewiz.fragments.CommunityFragment;
 import com.ruukaze.gamewiz.fragments.DiscoverFragment;
 import com.ruukaze.gamewiz.fragments.GamesFragment;
@@ -14,6 +17,8 @@ import com.ruukaze.gamewiz.fragments.ProfileFragment;
 public class MainActivity extends AppCompatActivity {
     private ImageView home_img, community_img, games_img, profile_img; // FOOTER IMAGES
     private LinearLayout toggle_home, toggle_community, toggle_games, toggle_profile; // FOOTER TOGGLE
+    private DatabaseHelper dbHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
         toggle_community = findViewById(R.id.toggle_community);
         toggle_games = findViewById(R.id.toggle_games);
         toggle_profile = findViewById(R.id.toggle_profile);
+
+        dbHelper = new DatabaseHelper(this);
+        readDummyUser();
 
         toggle_home.setOnClickListener(v -> inflateHomeFragment());
         toggle_community.setOnClickListener(v -> inflateCommunityFragment());
@@ -74,5 +82,16 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.parent_fragment, new ProfileFragment())
                 .commit();
+    }
+
+    private void readDummyUser() {
+        // Attempt to read from the database to trigger its creation
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM " + DatabaseHelper.TABLE_USERS, null);
+        if (cursor.moveToFirst()) {
+            String username = cursor.getString(cursor.getColumnIndexOrThrow("username"));
+            System.out.println("First user in the database: " + username);
+        }
+        cursor.close();
     }
 }
