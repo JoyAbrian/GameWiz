@@ -1,28 +1,18 @@
 package com.ruukaze.gamewiz.Class;
 
 public class User {
-    private int id;
     private String username;
     private String dateOfRegister;
     private String fullname;
     private String email;
     private String password;
 
-    public User(int id, String username, String dateOfRegister, String fullname, String email, String password) {
-        this.id = id;
+    public User(String username, String dateOfRegister, String fullname, String email, String password) {
         this.username = username;
         this.dateOfRegister = dateOfRegister;
         this.fullname = fullname;
         this.email = email;
         this.password = password;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getUsername() {
