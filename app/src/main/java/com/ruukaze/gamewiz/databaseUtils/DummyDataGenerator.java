@@ -186,11 +186,11 @@ public class DummyDataGenerator {
     public static ArrayList<Library> generateDummyCompleted() {
         ArrayList<Library> completes = new ArrayList<>();
 
-        completes.add(new Library(9, 1, 37034, "library"));
-        completes.add(new Library(10, 1, 16992, "library"));
-        completes.add(new Library(11, 1, 16992, "library"));
-        completes.add(new Library(12, 1, 3025, "library"));
-        completes.add(new Library(13, 1, 27421, "library"));
+        completes.add(new Library(9, 1, 37034, "completed"));
+        completes.add(new Library(10, 1, 16992, "completed"));
+        completes.add(new Library(11, 1, 16992, "completed"));
+        completes.add(new Library(12, 1, 3025, "completed"));
+        completes.add(new Library(13, 1, 27421, "completed"));
 
         return completes;
     }
