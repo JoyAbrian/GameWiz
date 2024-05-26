@@ -37,7 +37,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         uploadDummyLibraries(db);
 
         // CREATE AND INSERT DUMMY COMMUNITIES
-        db.execSQL("CREATE TABLE " + TABLE_COMMUNITIES + " (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, description TEXT, icon INTEGER, leader_id INTEGER, FOREIGN KEY (leader_id) REFERENCES users(id))");
+        db.execSQL("CREATE TABLE " + TABLE_COMMUNITIES + " (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, description TEXT, icon INTEGER, leader_id INTEGER UNIQUE, FOREIGN KEY (leader_id) REFERENCES users(id))");
         uploadDummyCommunities(db);
     }
 
