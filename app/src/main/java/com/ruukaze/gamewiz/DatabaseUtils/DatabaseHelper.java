@@ -1,4 +1,4 @@
-package com.ruukaze.gamewiz;
+package com.ruukaze.gamewiz.DatabaseUtils;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
