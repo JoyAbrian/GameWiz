@@ -24,8 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
-
+    
     @Override
     public void onCreate(SQLiteDatabase db) {
         // CREATE AND INSERT DUMMY USERS
