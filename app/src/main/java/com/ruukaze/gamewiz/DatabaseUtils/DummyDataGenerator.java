@@ -152,10 +152,6 @@ public class DummyDataGenerator {
         libraries.add(new Library(9, 1, 16992, "library"));
         libraries.add(new Library(10, 1, 3025, "library"));
         libraries.add(new Library(11, 1, 27421, "library"));
-        libraries.add(new Library(12, 1, 20228, "library"));
-        libraries.add(new Library(13, 1, 1942, "library"));
-        libraries.add(new Library(14, 1, 11397, "library"));
-        libraries.add(new Library(15, 1, 1020, "library"));
 
         return libraries;
     }
@@ -169,5 +165,16 @@ public class DummyDataGenerator {
         wishlists.add(new Library(4, 1, 217590, "wishlist"));
 
         return wishlists;
+    }
+
+    public static ArrayList<Library> generateDummyPlaying() {
+        ArrayList<Library> playings = new ArrayList<>();
+
+        playings.add(new Library(1, 1, 20228, "playing"));
+        playings.add(new Library(2, 1, 1942, "playing"));
+        playings.add(new Library(3, 1, 1020, "playing"));
+        playings.add(new Library(4, 1, 11397, "playing"));
+
+        return playings;
     }
 }
