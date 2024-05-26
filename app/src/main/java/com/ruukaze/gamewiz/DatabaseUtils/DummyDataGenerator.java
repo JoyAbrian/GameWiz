@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class DummyDataGenerator {
     private static final ArrayList<User> dummyUsers = generateDummyUser();
     private static final ArrayList<Library> dummyLibrary = generateDummyLibrary();
+    private static final ArrayList<Library> dummyWishlist = generateDummyWishlist();
 
     public static ArrayList<User> generateDummyUser() {
         ArrayList<User> users = new ArrayList<>();
@@ -157,5 +158,16 @@ public class DummyDataGenerator {
         libraries.add(new Library(15, 1, 1020, "library"));
 
         return libraries;
+    }
+
+    public static ArrayList<Library> generateDummyWishlist() {
+        ArrayList<Library> wishlists = new ArrayList<>();
+
+        wishlists.add(new Library(1, 1, 143114, "wishlist"));
+        wishlists.add(new Library(2, 1, 75235, "wishlist"));
+        wishlists.add(new Library(3, 1, 151665, "wishlist"));
+        wishlists.add(new Library(4, 1, 217590, "wishlist"));
+
+        return wishlists;
     }
 }
