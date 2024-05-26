@@ -98,7 +98,7 @@ public class DummyDataGenerator {
         users.add(new User(81, "stormhunter2", "01.12.1970", R.drawable.avatar_31, 1, "James Cooper", "stormhunter2@gmail.com", "12345678"));
         users.add(new User(82, "frostmage2", "11.06.1969", R.drawable.avatar_32, 2, "Emily Green", "frostmage2@gmail.com", "12345678"));
         users.add(new User(83, "shadowwarrior2", "23.09.1968", R.drawable.avatar_33, 3, "Alexander Ward", "shadowwarrior2@gmail.com", "12345678"));
-        users.add(new User(84, "nightfall2", "07.03.1967", R.drawable.avatar_34, 4, "Olivia Phillips", "nightfall2@gmail.com", "12345678"));
+        users.add(new User(84, "nightfall255", "07.03.1967", R.drawable.avatar_34, 4, "Olivia Phillips", "nightfall2@gmail.com", "12345678"));
         users.add(new User(85, "crimsonfire2", "12.07.1966", R.drawable.avatar_35, 5, "Mason Mitchell", "crimsonfire2@gmail.com", "12345678"));
         users.add(new User(86, "frostphoenix2", "25.11.1965", R.drawable.avatar_36, 6, "Charlotte Campbell", "frostphoenix2@gmail.com", "12345678"));
         users.add(new User(87, "darkshadow2", "08.04.1964", R.drawable.avatar_37, 7, "Lucas Carter", "darkshadow2@gmail.com", "12345678"));
