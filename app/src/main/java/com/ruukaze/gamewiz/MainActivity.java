@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.ruukaze.gamewiz.databaseUtils.DatabaseHelper;
 import com.ruukaze.gamewiz.fragments.AccessDeniedFragment;
@@ -61,39 +62,37 @@ public class MainActivity extends AppCompatActivity {
         profile_img.setImageResource(R.drawable.vector_profile);
     }
 
+    private void setFragmentWithAnimation(Fragment fragment, boolean isLeft) {
+        int enterAnim = isLeft ? R.anim.slide_left_in : R.anim.slide_right_in;
+        int exitAnim = isLeft ? R.anim.slide_left_out : R.anim.slide_right_out;
+
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(enterAnim, exitAnim)
+                .replace(R.id.parent_fragment, fragment)
+                .commit();
+    }
+
     private void inflateHomeFragment() {
         inactiveFooter();
         home_img.setImageResource(R.drawable.vector_home_active);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.parent_fragment, new DiscoverFragment())
-                .commit();
+        setFragmentWithAnimation(new DiscoverFragment(), true);
     }
 
     private void inflateCommunityFragment() {
         inactiveFooter();
         community_img.setImageResource(R.drawable.vector_community_active);
         if (isAuth) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.parent_fragment, new CommunityFragment())
-                    .commit();
+            setFragmentWithAnimation(new CommunityFragment(), true);
         } else {
             inflateAccessDeniedFragment();
         }
-    }
-
-    private void inflateAccessDeniedFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.parent_fragment, new AccessDeniedFragment())
-                .commit();
     }
 
     private void inflateGamesFragment() {
         inactiveFooter();
         games_img.setImageResource(R.drawable.vector_games_active);
         if (isAuth) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.parent_fragment, new GamesFragment())
-                    .commit();
+            setFragmentWithAnimation(new GamesFragment(), false);
         } else {
             inflateAccessDeniedFragment();
         }
@@ -103,12 +102,14 @@ public class MainActivity extends AppCompatActivity {
         inactiveFooter();
         profile_img.setImageResource(R.drawable.vector_profile_active);
         if (isAuth) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.parent_fragment, new ProfileFragment())
-                    .commit();
+            setFragmentWithAnimation(new ProfileFragment(), false);
         } else {
             inflateAccessDeniedFragment();
         }
+    }
+
+    private void inflateAccessDeniedFragment() {
+        setFragmentWithAnimation(new AccessDeniedFragment(), false);
     }
 
     private void readDummyUser() {
