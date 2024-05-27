@@ -95,7 +95,7 @@
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:src="@drawable/round_wishlist"
+                    android:src="@drawable/vector_wishlist"
                     android:background="@drawable/button_background"
                     android:backgroundTint="#BFBFBF"
                     app:tint="#FF0000"/>
