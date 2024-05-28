@@ -3,6 +3,7 @@ package com.ruukaze.gamewiz.databaseUtils;
 import com.ruukaze.gamewiz.R;
 import com.ruukaze.gamewiz.models.Community;
 import com.ruukaze.gamewiz.models.Library;
+import com.ruukaze.gamewiz.models.Post;
 import com.ruukaze.gamewiz.models.User;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ public class DummyDataGenerator {
     public static final ArrayList<User> dummyUsers = generateDummyUser();
     public static final ArrayList<Library> dummyLibraries = generateDummyLibrary();
     public static final ArrayList<Community> dummyCommunities = generateDummyCommunity();
+    public static final ArrayList<Post> dummyPosts = generateDummyPost();
 
     public static ArrayList<User> generateDummyUser() {
         ArrayList<User> users = new ArrayList<>();
@@ -210,5 +212,12 @@ public class DummyDataGenerator {
         communities.add(new Community(10, "eSportsElite", "A gathering place for competitive gamers aiming for victory on the global stage.", R.drawable.banner_5, 43));
 
         return communities;
+    }
+
+    public static ArrayList<Post> generateDummyPost() {
+        ArrayList<Post> posts = new ArrayList<>();
+
+
+        return posts;
     }
 }
