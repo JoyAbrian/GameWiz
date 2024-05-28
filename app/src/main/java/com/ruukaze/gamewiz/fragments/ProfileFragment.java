@@ -1,12 +1,17 @@
 package com.ruukaze.gamewiz.fragments;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+
+import com.ruukaze.gamewiz.MainActivity;
 import com.ruukaze.gamewiz.R;
 import com.ruukaze.gamewiz.databaseUtils.DatabaseHelper;
 import com.ruukaze.gamewiz.models.User;
@@ -19,10 +24,12 @@ public class ProfileFragment extends Fragment {
     private TextView profile_username_2;
     private TextView profile_full_name;
     private TextView profile_email;
+    private Button logout_button;
 
     private int user_id;
     private DatabaseHelper dbHelper;
     private User user;
+    private SharedPreferences sharedPreferences;
 
     public ProfileFragment(int user_id) {
         this.user_id = user_id;
@@ -48,7 +55,9 @@ public class ProfileFragment extends Fragment {
 
             user = new User(id, username, dateOfRegister, avatar, community_id, fullname, email, password);
         }
-        System.out.println(user_id);
+
+        sharedPreferences = getContext().getSharedPreferences("user", getContext().MODE_PRIVATE);
+
         cursor.close();
     }
 
@@ -62,6 +71,7 @@ public class ProfileFragment extends Fragment {
         profile_username_2 = view.findViewById(R.id.profile_username_2);
         profile_full_name = view.findViewById(R.id.profile_full_name);
         profile_email = view.findViewById(R.id.profile_email);
+        logout_button = view.findViewById(R.id.logout_button);
 
         if (user != null) {
             profile_image.setImageResource(user.getAvatar());
@@ -73,6 +83,13 @@ public class ProfileFragment extends Fragment {
         } else {
             profile_username.setText("User not found");
         }
+
+        logout_button.setOnClickListener(v -> {
+            sharedPreferences.edit().clear().apply();
+            Intent intent = new Intent(getContext(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        });
 
         return view;
     }
