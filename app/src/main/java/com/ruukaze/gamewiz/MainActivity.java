@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
 
     private boolean isAuth;
+    private int user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper = new DatabaseHelper(this);
         sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
 
         isAuth = sharedPreferences.getBoolean("isAuth", false);
+        user_id = sharedPreferences.getInt("user_id", 0);
 
         toggle_home.setOnClickListener(v -> inflateHomeFragment());
         toggle_community.setOnClickListener(v -> inflateCommunityFragment());
@@ -101,8 +102,9 @@ public class MainActivity extends AppCompatActivity {
     private void inflateProfileFragment() {
         inactiveFooter();
         profile_img.setImageResource(R.drawable.vector_profile_active);
+
         if (isAuth) {
-            setFragmentWithAnimation(new ProfileFragment(), false);
+            setFragmentWithAnimation(new ProfileFragment(user_id), false);
         } else {
             inflateAccessDeniedFragment();
         }

@@ -1,66 +1,79 @@
 package com.ruukaze.gamewiz.fragments;
 
+import android.database.Cursor;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.TextView;
 import com.ruukaze.gamewiz.R;
+import com.ruukaze.gamewiz.databaseUtils.DatabaseHelper;
+import com.ruukaze.gamewiz.models.User;
+import de.hdodenhof.circleimageview.CircleImageView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ProfileFragment extends Fragment {
+    private CircleImageView profile_image;
+    private TextView profile_username;
+    private TextView profile_date_register;
+    private TextView profile_username_2;
+    private TextView profile_full_name;
+    private TextView profile_email;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private int user_id;
+    private DatabaseHelper dbHelper;
+    private User user;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public ProfileFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ProfileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ProfileFragment newInstance(String param1, String param2) {
-        ProfileFragment fragment = new ProfileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public ProfileFragment(int user_id) {
+        this.user_id = user_id;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
+        dbHelper = new DatabaseHelper(getContext());
+        Cursor cursor = dbHelper.getReadableDatabase().rawQuery("SELECT * FROM users WHERE id = ?", new String[]{String.valueOf(user_id)});
+
+        user = null;
+        if (cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+            String username = cursor.getString(cursor.getColumnIndexOrThrow("username"));
+            String dateOfRegister = cursor.getString(cursor.getColumnIndexOrThrow("dateOfRegister"));
+            int avatar = cursor.getInt(cursor.getColumnIndexOrThrow("avatar"));
+            int community_id = cursor.getInt(cursor.getColumnIndexOrThrow("community_id"));
+            String fullname = cursor.getString(cursor.getColumnIndexOrThrow("fullname"));
+            String email = cursor.getString(cursor.getColumnIndexOrThrow("email"));
+            String password = cursor.getString(cursor.getColumnIndexOrThrow("password"));
+
+            user = new User(id, username, dateOfRegister, avatar, community_id, fullname, email, password);
         }
+        System.out.println(user_id);
+        cursor.close();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+
+        profile_image = view.findViewById(R.id.profile_image);
+        profile_username = view.findViewById(R.id.profile_username);
+        profile_date_register = view.findViewById(R.id.profile_date_register);
+        profile_username_2 = view.findViewById(R.id.profile_username_2);
+        profile_full_name = view.findViewById(R.id.profile_full_name);
+        profile_email = view.findViewById(R.id.profile_email);
+
+        if (user != null) {
+            profile_image.setImageResource(user.getAvatar());
+            profile_username.setText(user.getUsername());
+            profile_date_register.setText(user.getDateOfRegister());
+            profile_username_2.setText(user.getUsername());
+            profile_full_name.setText(user.getFullname());
+            profile_email.setText(user.getEmail());
+        } else {
+            profile_username.setText("User not found");
+        }
+
+        return view;
     }
 }

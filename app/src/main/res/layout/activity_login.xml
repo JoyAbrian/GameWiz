@@ -56,7 +56,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:background="@drawable/edit_text_background"
                 android:paddingHorizontal="10dp">
 
@@ -71,7 +71,7 @@
                 <EditText
                     android:id="@+id/inputEmail"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_toEndOf="@id/icon_email"
                     android:hint="E-Mail"
                     android:paddingStart="8dp"/>
@@ -80,7 +80,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="56dp"
                 android:background="@drawable/edit_text_background"
                 android:paddingHorizontal="10dp"
                 android:layout_marginTop="10dp">
@@ -96,10 +96,11 @@
                 <EditText
                     android:id="@+id/inputPassword"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_toEndOf="@id/icon_password"
                     android:hint="Password"
-                    android:paddingStart="8dp"/>
+                    android:paddingStart="8dp"
+                    android:inputType="textPassword"/>
 
             </RelativeLayout>
 

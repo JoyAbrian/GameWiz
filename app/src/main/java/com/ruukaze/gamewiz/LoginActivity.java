@@ -1,6 +1,8 @@
 package com.ruukaze.gamewiz;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.Button;
@@ -17,8 +19,12 @@ public class LoginActivity extends AppCompatActivity {
     private Button btnLogin, btnRegister;
     private EditText inputEmail, inputPassword;
 
-    private DatabaseHelper databaseHelper;
+    private DatabaseHelper dbHelper;
+    private SharedPreferences sharedPreferences;
+    private boolean isAuth;
 
+
+    @SuppressLint("Range")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,7 +36,11 @@ public class LoginActivity extends AppCompatActivity {
         inputEmail = findViewById(R.id.inputEmail);
         inputPassword = findViewById(R.id.inputPassword);
 
-        databaseHelper = new DatabaseHelper(this);
+        dbHelper = new DatabaseHelper(this);
+        sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        isAuth = sharedPreferences.getBoolean("isAuth", false);
 
         toggle_back.setOnClickListener(v -> {
             finish();
@@ -47,12 +57,18 @@ public class LoginActivity extends AppCompatActivity {
                 String email = inputEmail.getText().toString();
                 String password = inputPassword.getText().toString();
 
-                Cursor cursor = databaseHelper.getReadableDatabase().rawQuery("SELECT * FROM users WHERE email = ? AND password = ?", new String[]{email, password});
+                Cursor cursor = dbHelper.getReadableDatabase().rawQuery("SELECT * FROM users WHERE email = ? AND password = ?", new String[]{email, password});
                 if (cursor.getCount() > 0) {
                     cursor.moveToFirst();
+                    sharedPreferences.edit().putBoolean("isAuth", true).apply();
+                    sharedPreferences.edit().putInt("user_id", cursor.getInt(cursor.getColumnIndex("id"))).apply();
+
                     Intent intent = new Intent(this, MainActivity.class);
+                    intent.putExtra("isAuth", true);
+                    intent.putExtra("user_id", cursor.getInt(cursor.getColumnIndex("id")));
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
+
                     finish();
                 } else {
                     inputEmail.setError("Invalid email or password");
