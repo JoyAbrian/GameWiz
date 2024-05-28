@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ruukaze.gamewiz.R;
 import com.ruukaze.gamewiz.adapter.CommunityPostAdapter;
@@ -22,6 +24,10 @@ import java.util.ArrayList;
 
 public class CommunityFragment extends Fragment {
     private RecyclerView rv_posts;
+    private ImageView community_banner;
+    private TextView community_name;
+    private TextView community_description;
+    private TextView community_size;
 
     private static int user_id;
     private DatabaseHelper dbHelper;
@@ -65,7 +71,29 @@ public class CommunityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_community, container, false);
 
+        community_banner = view.findViewById(R.id.community_banner);
+        community_name = view.findViewById(R.id.community_name);
+        community_description = view.findViewById(R.id.community_description);
+        community_size = view.findViewById(R.id.community_size);
+        rv_posts = view.findViewById(R.id.rv_posts);
+
         if (user.getCommunity_id() != 0) {
+            // Get Community Card
+            Cursor cursor1 = dbHelper.getReadableDatabase().rawQuery("SELECT * FROM communities WHERE id = ?", new String[]{String.valueOf(user.getCommunity_id())});
+            if (cursor1.moveToFirst()) {
+                community_banner.setImageResource(cursor1.getInt(cursor1.getColumnIndexOrThrow("icon")));
+                community_name.setText(cursor1.getString(cursor1.getColumnIndexOrThrow("name")));
+                community_description.setText(cursor1.getString(cursor1.getColumnIndexOrThrow("description")));
+            }
+            cursor1.close();
+
+            Cursor cursor2 = dbHelper.getReadableDatabase().rawQuery("SELECT * FROM users WHERE community_id = ?", new String[]{String.valueOf(user.getCommunity_id())});
+            if (cursor2.moveToFirst()) {
+                community_size.setText(cursor2.getCount() + " Members");
+            }
+            cursor2.close();
+
+            // Set community data
             ArrayList<Post> posts = new ArrayList<>();
             Cursor cursor = dbHelper.getReadableDatabase().rawQuery("SELECT * FROM posts WHERE community_id = ? ORDER BY id DESC", new String[]{String.valueOf(user.getCommunity_id())});
 
@@ -82,11 +110,8 @@ public class CommunityFragment extends Fragment {
             }
             cursor.close();
 
-            rv_posts = view.findViewById(R.id.rv_posts);
             rv_posts.setLayoutManager(new LinearLayoutManager(getContext()));
             rv_posts.setAdapter(new CommunityPostAdapter(posts, getContext()));
-        } else {
-
         }
 
         return view;
