@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import com.ruukaze.gamewiz.R;
 import com.ruukaze.gamewiz.models.Community;
 import com.ruukaze.gamewiz.models.Library;
+import com.ruukaze.gamewiz.models.Post;
 import com.ruukaze.gamewiz.models.User;
 
 import java.text.SimpleDateFormat;
@@ -24,6 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_USERS = "users";
     public static final String TABLE_LIBRARY = "library";
     public static final String TABLE_COMMUNITIES = "communities";
+    public static final String TABLE_POSTS = "posts";
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -42,6 +44,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // CREATE AND INSERT DUMMY COMMUNITIES
         db.execSQL("CREATE TABLE " + TABLE_COMMUNITIES + " (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE, description TEXT, icon INTEGER, leader_id INTEGER UNIQUE, FOREIGN KEY (leader_id) REFERENCES users(id))");
         uploadDummyCommunities(db);
+
+        // CREATE AND INSERT DUMMY POSTS
+        db.execSQL("CREATE TABLE " + TABLE_POSTS + " (id INTEGER PRIMARY KEY AUTOINCREMENT, community_id INTEGER, user_id INTEGER, post TEXT, image INTEGER, FOREIGN KEY (community_id) REFERENCES communities(id), FOREIGN KEY (user_id) REFERENCES users(id))");
+        uploadDummyPosts(db);
     }
 
     @Override
@@ -90,6 +96,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put("icon", community.getIcon());
             values.put("leader_id", community.getLeader_id());
             db.insert(TABLE_COMMUNITIES, null, values);
+        }
+    }
+
+    private void uploadDummyPosts(SQLiteDatabase db) {
+        ArrayList<Post> posts = DummyDataGenerator.dummyPosts;
+        for (Post post : posts) {
+            ContentValues values = new ContentValues();
+            values.put("id", post.getId());
+            values.put("community_id", post.getCommunity_id());
+            values.put("user_id", post.getUser_id());
+            values.put("post", post.getPost());
+            values.put("image", post.getImage());
+            db.insert(TABLE_POSTS, null, values);
         }
     }
 
