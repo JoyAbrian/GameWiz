@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         inactiveFooter();
         games_img.setImageResource(R.drawable.vector_games_active);
         if (isAuth) {
-            setFragmentWithAnimation(new GamesFragment(), false);
+            setFragmentWithAnimation(new GamesFragment(user_id), false);
         } else {
             inflateAccessDeniedFragment();
         }

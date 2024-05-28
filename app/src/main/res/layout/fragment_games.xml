@@ -51,7 +51,8 @@
                     android:layout_height="35dp"
                     android:src="@drawable/vector_library"
                     android:background="@drawable/button_background"
-                    app:tint="@color/white" />
+                    app:tint="@color/white"
+                    android:padding="5dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -64,6 +65,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/library_count"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
@@ -98,7 +100,8 @@
                     android:src="@drawable/vector_wishlist"
                     android:background="@drawable/button_background"
                     android:backgroundTint="#BFBFBF"
-                    app:tint="#FF0000"/>
+                    app:tint="#FF0000"
+                    android:padding="5dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -111,6 +114,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/wishlist_count"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
@@ -145,7 +149,8 @@
                     android:src="@drawable/vector_play"
                     android:background="@drawable/button_background"
                     android:backgroundTint="#673AB7"
-                    app:tint="#FFFFFF"/>
+                    app:tint="#FFFFFF"
+                    android:padding="5dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -158,6 +163,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/playing_count"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
@@ -192,7 +198,8 @@
                     android:src="@drawable/vector_pause"
                     android:background="@drawable/button_background"
                     android:backgroundTint="#FF0000"
-                    app:tint="#FFFFFF"/>
+                    app:tint="#FFFFFF"
+                    android:padding="5dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -205,6 +212,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/pause_count"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
@@ -238,7 +246,8 @@
                     android:src="@drawable/vector_completed"
                     android:background="@drawable/button_background"
                     android:backgroundTint="#4CAF50"
-                    app:tint="#FFFFFF"/>
+                    app:tint="#FFFFFF"
+                    android:padding="5dp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -251,6 +260,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/completed_count"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
