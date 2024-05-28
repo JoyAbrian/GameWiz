@@ -54,11 +54,11 @@ public class LoginActivity extends AppCompatActivity {
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                     finish();
-                    cursor.close();
                 } else {
                     inputEmail.setError("Invalid email or password");
                     inputPassword.setError("Invalid email or password");
                 }
+                cursor.close();
             }
         });
 

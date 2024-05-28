@@ -87,6 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
                         finish();
                     }
                 }
+                cursor.close();
             }
         });
     }
