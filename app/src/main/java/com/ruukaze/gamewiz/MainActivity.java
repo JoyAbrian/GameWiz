@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         inactiveFooter();
         community_img.setImageResource(R.drawable.vector_community_active);
         if (isAuth) {
-            setFragmentWithAnimation(new CommunityFragment(), true);
+            setFragmentWithAnimation(new CommunityFragment(user_id), true);
         } else {
             inflateAccessDeniedFragment();
         }
