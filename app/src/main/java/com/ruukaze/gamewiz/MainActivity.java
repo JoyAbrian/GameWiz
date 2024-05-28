@@ -113,15 +113,4 @@ public class MainActivity extends AppCompatActivity {
     private void inflateAccessDeniedFragment() {
         setFragmentWithAnimation(new AccessDeniedFragment(), false);
     }
-
-    private void readDummyUser() {
-        // Attempt to read from the database to trigger its creation
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM " + DatabaseHelper.TABLE_USERS, null);
-        if (cursor.moveToFirst()) {
-            String username = cursor.getString(cursor.getColumnIndexOrThrow("username"));
-            System.out.println("First user in the database: " + username);
-        }
-        cursor.close();
-    }
 }
