@@ -7,11 +7,15 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.ruukaze.gamewiz.R;
 import com.ruukaze.gamewiz.models.Community;
 import com.ruukaze.gamewiz.models.Library;
 import com.ruukaze.gamewiz.models.User;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static String DATABASE_NAME = "GameWiz.db";
@@ -88,4 +92,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.insert(TABLE_COMMUNITIES, null, values);
         }
     }
+
+    private String getCurrentDateTime() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        Date date = new Date();
+        return simpleDateFormat.format(date);
+    }
+
+    public void insertUser(String username, String fullname, String email, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("username", username);
+        values.put("dateOfRegister", getCurrentDateTime());
+        values.put("avatar", R.drawable.avatar_4);
+        values.put("community_id", 0);
+        values.put("fullname", fullname);
+        values.put("email", email);
+        values.put("password", password);
+        db.insert(TABLE_USERS, null, values);
+        db.close();
+    }
+
+
 }
