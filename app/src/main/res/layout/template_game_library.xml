@@ -32,11 +32,11 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/game_developer"
+                android:id="@+id/game_release_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-light"
-                android:text="Developer"
+                android:text="Release Date"
                 android:textSize="12sp"
                 android:layout_marginVertical="4dp"/>
 
