@@ -18,25 +18,4 @@ public interface ApiService {
     })
     @GET("/games")
     Call<List<Game>> getGames();
-
-    @Headers({
-            "Accept: application/json",
-            "Content-Type: text/plain"
-    })
-    @GET("/companies")
-    Call<List<Company>> getCompanies();
-
-    @Headers({
-            "Accept: application/json",
-            "Content-Type: text/plain"
-    })
-    @GET("/genres")
-    Call<List<Genre>> getGenres();
-
-    @Headers({
-            "Accept: application/json",
-            "Content-Type: text/plain"
-    })
-    @GET("/platforms")
-    Call<List<Platform>> getPlatforms();
 }
