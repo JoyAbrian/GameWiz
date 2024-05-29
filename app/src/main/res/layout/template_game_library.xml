@@ -19,7 +19,7 @@
                 android:id="@+id/game_cover"
                 android:layout_width="165dp"
                 android:layout_height="220dp"
-                android:scaleType="fitCenter"
+                android:scaleType="fitXY"
                 android:src="@drawable/ic_launcher_background"/>
 
             <TextView
