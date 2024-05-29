@@ -1,21 +1,15 @@
 package com.ruukaze.gamewiz.apiService;
 
-import com.ruukaze.gamewiz.models.Company;
 import com.ruukaze.gamewiz.models.Game;
-import com.ruukaze.gamewiz.models.Genre;
-import com.ruukaze.gamewiz.models.Platform;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
+import retrofit2.http.Query;
 
 public interface ApiService {
-    @Headers({
-            "Accept: application/json",
-            "Content-Type: text/plain"
-    })
-    @GET("/games")
-    Call<List<Game>> getGames();
+    @GET("games")
+    Call<ArrayList<Game>> getFeaturedGames(@Query("fields") String fields, @Query("where") String where, @Query("limit") int limit);
 }

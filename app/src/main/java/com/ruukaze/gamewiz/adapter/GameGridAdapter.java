@@ -10,36 +10,47 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ruukaze.gamewiz.R;
-import com.ruukaze.gamewiz.models.Company;
 import com.ruukaze.gamewiz.models.Game;
-import com.ruukaze.gamewiz.models.ReleaseDate;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class GameGridAdapter extends RecyclerView.Adapter<GameGridAdapter.ViewHolder>{
+public class GameGridAdapter extends RecyclerView.Adapter<GameGridAdapter.ViewHolder> {
     private final ArrayList<Game> games;
 
     public GameGridAdapter(ArrayList<Game> games) {
-        this.games = games;
+        if (games == null) {
+            this.games = new ArrayList<>();
+        } else {
+            this.games = games;
+        }
     }
 
     @NonNull
     @Override
-    public GameGridAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.template_game_library, parent, false);
         return new ViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GameGridAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Game game = games.get(position);
 
-        ReleaseDate releaseDate = game.getRelease_dates().get(0);
+        if (game != null) {
+            holder.game_title.setText(game.getName());
 
-        Picasso.get().load("https://images.igdb.com/igdb/image/upload/t_cover_big/" + game.getCover().getImage_id() + ".jpg").into(holder.game_cover);
-        holder.game_title.setText(game.getName());
-        holder.game_release_date.setText(releaseDate.getHuman());
+            if (game.getRelease_dates() != null && !game.getRelease_dates().isEmpty()) {
+                holder.game_release_date.setText(game.getRelease_dates().get(0).getHuman());
+            } else {
+                holder.game_release_date.setText("Release date not available");
+            }
+
+            if (game.getCover() != null) {
+                Picasso.get().load("https://images.igdb.com/igdb/image/upload/t_cover_big/" + game.getCover().getImage_id() + ".jpg").into(holder.game_cover);
+            }
+        }
     }
 
     @Override
