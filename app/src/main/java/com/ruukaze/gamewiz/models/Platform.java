@@ -3,9 +3,9 @@ package com.ruukaze.gamewiz.models;
 public class Platform {
     private int id;
     private String name;
-    private int platform_logo;
+    private Cover platform_logo;
 
-    public Platform(int id, String name, int platform_logo) {
+    public Platform(int id, String name, Cover platform_logo) {
         this.id = id;
         this.name = name;
         this.platform_logo = platform_logo;
@@ -27,11 +27,11 @@ public class Platform {
         this.name = name;
     }
 
-    public int getPlatform_logo() {
+    public Cover getPlatform_logo() {
         return platform_logo;
     }
 
-    public void setPlatform_logo(int platform_logo) {
+    public void setPlatform_logo(Cover platform_logo) {
         this.platform_logo = platform_logo;
     }
 }

@@ -1,24 +1,22 @@
 package com.ruukaze.gamewiz.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
     private int id;
-    private List<Integer> age_ratings;
     private float aggregated_rating;
-    private int cover;
-    private List<Integer> involved_companies;
+    private Cover cover;
+    private ArrayList<InvolvedCompany> involved_companies;
     private String name;
-    private List<Integer> platforms;
-    private List<Integer> release_dates;
-    private List<Integer> screenshots;
-    private List<Integer> similar_games;
+    private ArrayList<Platform> platforms;
+    private ArrayList<ReleaseDate> release_dates;
+    private ArrayList<Cover> screenshots;
+    private ArrayList<Game> similar_games;
     private String summary;
-    private List<Integer> videos;
 
-    public Game(int id, List<Integer> age_ratings, float aggregated_rating, int cover, List<Integer> involved_companies, String name, List<Integer> platforms, List<Integer> release_dates, List<Integer> screenshots, List<Integer> similar_games, String summary, List<Integer> videos) {
+    public Game(int id, float aggregated_rating, Cover cover, ArrayList<InvolvedCompany> involved_companies, String name, ArrayList<Platform> platforms, ArrayList<ReleaseDate> release_dates, ArrayList<Cover> screenshots, ArrayList<Game> similar_games, String summary) {
         this.id = id;
-        this.age_ratings = age_ratings;
         this.aggregated_rating = aggregated_rating;
         this.cover = cover;
         this.involved_companies = involved_companies;
@@ -28,7 +26,6 @@ public class Game {
         this.screenshots = screenshots;
         this.similar_games = similar_games;
         this.summary = summary;
-        this.videos = videos;
     }
 
     public int getId() {
@@ -39,14 +36,6 @@ public class Game {
         this.id = id;
     }
 
-    public List<Integer> getAge_ratings() {
-        return age_ratings;
-    }
-
-    public void setAge_ratings(List<Integer> age_ratings) {
-        this.age_ratings = age_ratings;
-    }
-
     public float getAggregated_rating() {
         return aggregated_rating;
     }
@@ -55,19 +44,19 @@ public class Game {
         this.aggregated_rating = aggregated_rating;
     }
 
-    public int getCover() {
+    public Cover getCover() {
         return cover;
     }
 
-    public void setCover(int cover) {
+    public void setCover(Cover cover) {
         this.cover = cover;
     }
 
-    public List<Integer> getInvolved_companies() {
+    public ArrayList<InvolvedCompany> getInvolved_companies() {
         return involved_companies;
     }
 
-    public void setInvolved_companies(List<Integer> involved_companies) {
+    public void setInvolved_companies(ArrayList<InvolvedCompany> involved_companies) {
         this.involved_companies = involved_companies;
     }
 
@@ -79,35 +68,35 @@ public class Game {
         this.name = name;
     }
 
-    public List<Integer> getPlatforms() {
+    public ArrayList<Platform> getPlatforms() {
         return platforms;
     }
 
-    public void setPlatforms(List<Integer> platforms) {
+    public void setPlatforms(ArrayList<Platform> platforms) {
         this.platforms = platforms;
     }
 
-    public List<Integer> getRelease_dates() {
+    public ArrayList<ReleaseDate> getRelease_dates() {
         return release_dates;
     }
 
-    public void setRelease_dates(List<Integer> release_dates) {
+    public void setRelease_dates(ArrayList<ReleaseDate> release_dates) {
         this.release_dates = release_dates;
     }
 
-    public List<Integer> getScreenshots() {
+    public ArrayList<Cover> getScreenshots() {
         return screenshots;
     }
 
-    public void setScreenshots(List<Integer> screenshots) {
+    public void setScreenshots(ArrayList<Cover> screenshots) {
         this.screenshots = screenshots;
     }
 
-    public List<Integer> getSimilar_games() {
+    public ArrayList<Game> getSimilar_games() {
         return similar_games;
     }
 
-    public void setSimilar_games(List<Integer> similar_games) {
+    public void setSimilar_games(ArrayList<Game> similar_games) {
         this.similar_games = similar_games;
     }
 
@@ -117,13 +106,5 @@ public class Game {
 
     public void setSummary(String summary) {
         this.summary = summary;
-    }
-
-    public List<Integer> getVideos() {
-        return videos;
-    }
-
-    public void setVideos(List<Integer> videos) {
-        this.videos = videos;
     }
 }
