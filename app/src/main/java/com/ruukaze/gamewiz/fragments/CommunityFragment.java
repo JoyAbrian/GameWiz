@@ -2,7 +2,6 @@ package com.ruukaze.gamewiz.fragments;
 
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -30,17 +29,15 @@ public class CommunityFragment extends Fragment {
     private TextView community_description;
     private TextView community_size;
 
-    private static int user_id;
     private DatabaseHelper dbHelper;
-    private User user;
-    private SharedPreferences sharedPreferences;
+    private static User user;
 
-    public CommunityFragment(int user_id) {
-        this.user_id = user_id;
+    public CommunityFragment(User user) {
+        this.user = user;
     }
 
     public static CommunityFragment newInstance() {
-        return new CommunityFragment(user_id);
+        return new CommunityFragment(user);
     }
 
     @Override
@@ -48,9 +45,6 @@ public class CommunityFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         dbHelper = new DatabaseHelper(getContext());
-        sharedPreferences = getContext().getSharedPreferences("user", getContext().MODE_PRIVATE);
-
-        new LoadUserDataTask().execute(user_id);
     }
 
     @Override
@@ -63,73 +57,43 @@ public class CommunityFragment extends Fragment {
         community_size = view.findViewById(R.id.community_size);
         rv_posts = view.findViewById(R.id.rv_posts);
 
-        return view;
-    }
+        if (user.getCommunity_id() != 0) {
+            // Get Community Card
+            Cursor cursor1 = dbHelper.getReadableDatabase().rawQuery("SELECT * FROM communities WHERE id = ?", new String[]{String.valueOf(user.getCommunity_id())});
+            if (cursor1.moveToFirst()) {
+                community_banner.setImageResource(cursor1.getInt(cursor1.getColumnIndexOrThrow("icon")));
+                community_name.setText(cursor1.getString(cursor1.getColumnIndexOrThrow("name")));
+                community_description.setText(cursor1.getString(cursor1.getColumnIndexOrThrow("description")));
+            }
+            cursor1.close();
 
-    private class LoadUserDataTask extends AsyncTask<Integer, Void, Void> {
-        @Override
-        protected Void doInBackground(Integer... params) {
-            int userId = params[0];
+            Cursor cursor2 = dbHelper.getReadableDatabase().rawQuery("SELECT * FROM users WHERE community_id = ?", new String[]{String.valueOf(user.getCommunity_id())});
+            if (cursor2.moveToFirst()) {
+                community_size.setText(cursor2.getCount() + " Members");
+            }
+            cursor2.close();
 
-            Cursor cursor = dbHelper.getReadableDatabase().rawQuery("SELECT * FROM users WHERE id = ?", new String[]{String.valueOf(userId)});
+            // Set community data
+            ArrayList<Post> posts = new ArrayList<>();
+            Cursor cursor = dbHelper.getReadableDatabase().rawQuery("SELECT * FROM posts WHERE community_id = ? ORDER BY id DESC", new String[]{String.valueOf(user.getCommunity_id())});
+
             if (cursor.moveToFirst()) {
-                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
-                String username = cursor.getString(cursor.getColumnIndexOrThrow("username"));
-                String dateOfRegister = cursor.getString(cursor.getColumnIndexOrThrow("dateOfRegister"));
-                int avatar = cursor.getInt(cursor.getColumnIndexOrThrow("avatar"));
-                int community_id = cursor.getInt(cursor.getColumnIndexOrThrow("community_id"));
-                String fullname = cursor.getString(cursor.getColumnIndexOrThrow("fullname"));
-                String email = cursor.getString(cursor.getColumnIndexOrThrow("email"));
-                String password = cursor.getString(cursor.getColumnIndexOrThrow("password"));
+                do {
+                    int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                    int community_id = cursor.getInt(cursor.getColumnIndexOrThrow("community_id"));
+                    int user_id = cursor.getInt(cursor.getColumnIndexOrThrow("user_id"));
+                    String post = cursor.getString(cursor.getColumnIndexOrThrow("post"));
+                    int image = cursor.getInt(cursor.getColumnIndexOrThrow("image"));
 
-                user = new User(id, username, dateOfRegister, avatar, community_id, fullname, email, password);
+                    posts.add(new Post(id, community_id, user_id, post, image));
+                } while (cursor.moveToNext());
             }
             cursor.close();
 
-            if (user != null && user.getCommunity_id() != 0) {
-                Cursor communityCursor = dbHelper.getReadableDatabase().rawQuery(
-                        "SELECT c.icon, c.name, c.description, COUNT(u.id) AS size " +
-                                "FROM communities c LEFT JOIN users u ON c.id = u.community_id " +
-                                "WHERE c.id = ?", new String[]{String.valueOf(user.getCommunity_id())});
-
-                if (communityCursor.moveToFirst()) {
-                    int icon = communityCursor.getInt(communityCursor.getColumnIndexOrThrow("icon"));
-                    String name = communityCursor.getString(communityCursor.getColumnIndexOrThrow("name"));
-                    String description = communityCursor.getString(communityCursor.getColumnIndexOrThrow("description"));
-                    int size = communityCursor.getInt(communityCursor.getColumnIndexOrThrow("size"));
-
-                    getActivity().runOnUiThread(() -> {
-                        community_banner.setImageResource(icon);
-                        community_name.setText(name);
-                        community_description.setText(description);
-                        community_size.setText(size + " Members");
-                    });
-                }
-                communityCursor.close();
-
-                ArrayList<Post> posts = new ArrayList<>();
-                Cursor postCursor = dbHelper.getReadableDatabase().rawQuery(
-                        "SELECT * FROM posts WHERE community_id = ? ORDER BY id DESC", new String[]{String.valueOf(user.getCommunity_id())});
-
-                if (postCursor.moveToFirst()) {
-                    do {
-                        int id = postCursor.getInt(postCursor.getColumnIndexOrThrow("id"));
-                        int community_id = postCursor.getInt(postCursor.getColumnIndexOrThrow("community_id"));
-                        int user_id = postCursor.getInt(postCursor.getColumnIndexOrThrow("user_id"));
-                        String post = postCursor.getString(postCursor.getColumnIndexOrThrow("post"));
-                        int image = postCursor.getInt(postCursor.getColumnIndexOrThrow("image"));
-
-                        posts.add(new Post(id, community_id, user_id, post, image));
-                    } while (postCursor.moveToNext());
-                }
-                postCursor.close();
-
-                getActivity().runOnUiThread(() -> {
-                    rv_posts.setLayoutManager(new LinearLayoutManager(getContext()));
-                    rv_posts.setAdapter(new CommunityPostAdapter(posts, getContext()));
-                });
-            }
-            return null;
+            rv_posts.setLayoutManager(new LinearLayoutManager(getContext()));
+            rv_posts.setAdapter(new CommunityPostAdapter(posts, getContext()));
         }
+
+        return view;
     }
 }

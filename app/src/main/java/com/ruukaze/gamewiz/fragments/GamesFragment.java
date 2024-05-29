@@ -25,43 +25,21 @@ public class GamesFragment extends Fragment {
     private TextView pause_count;
     private TextView completed_count;
 
-    private static int user_id;
+    private static User user;
     private DatabaseHelper dbHelper;
-    private User user;
-    private SharedPreferences sharedPreferences;
 
-    public GamesFragment(int user_id) {
-        this.user_id = user_id;
+    public GamesFragment(User user) {
+        this.user = user;
     }
 
     public static GamesFragment newInstance() {
-        return new GamesFragment(user_id);
+        return new GamesFragment(user);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         dbHelper = new DatabaseHelper(getContext());
-        Cursor cursor = dbHelper.getReadableDatabase().rawQuery("SELECT * FROM users WHERE id = ?", new String[]{String.valueOf(user_id)});
-
-        user = null;
-        if (cursor.moveToFirst()) {
-            int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
-            String username = cursor.getString(cursor.getColumnIndexOrThrow("username"));
-            String dateOfRegister = cursor.getString(cursor.getColumnIndexOrThrow("dateOfRegister"));
-            int avatar = cursor.getInt(cursor.getColumnIndexOrThrow("avatar"));
-            int community_id = cursor.getInt(cursor.getColumnIndexOrThrow("community_id"));
-            String fullname = cursor.getString(cursor.getColumnIndexOrThrow("fullname"));
-            String email = cursor.getString(cursor.getColumnIndexOrThrow("email"));
-            String password = cursor.getString(cursor.getColumnIndexOrThrow("password"));
-
-            user = new User(id, username, dateOfRegister, avatar, community_id, fullname, email, password);
-        }
-
-        sharedPreferences = getContext().getSharedPreferences("user", getContext().MODE_PRIVATE);
-
-        cursor.close();
     }
 
     @Override
@@ -75,7 +53,7 @@ public class GamesFragment extends Fragment {
         completed_count = view.findViewById(R.id.completed_count);
 
         if (user != null) {
-            Cursor cursor = dbHelper.getReadableDatabase().rawQuery("SELECT * FROM library WHERE user_id = ?", new String[]{String.valueOf(user_id)});
+            Cursor cursor = dbHelper.getReadableDatabase().rawQuery("SELECT * FROM library WHERE user_id = ?", new String[]{String.valueOf(user.getId())});
             ArrayList<Library> libraries = new ArrayList<>();
             while (cursor.moveToNext()) {
                 int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));

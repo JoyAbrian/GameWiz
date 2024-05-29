@@ -26,39 +26,17 @@ public class ProfileFragment extends Fragment {
     private TextView profile_email;
     private Button logout_button;
 
-    private int user_id;
     private DatabaseHelper dbHelper;
     private User user;
     private SharedPreferences sharedPreferences;
 
-    public ProfileFragment(int user_id) {
-        this.user_id = user_id;
+    public ProfileFragment(User user) {
+        this.user = user;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        dbHelper = new DatabaseHelper(getContext());
-        Cursor cursor = dbHelper.getReadableDatabase().rawQuery("SELECT * FROM users WHERE id = ?", new String[]{String.valueOf(user_id)});
-
-        user = null;
-        if (cursor.moveToFirst()) {
-            int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
-            String username = cursor.getString(cursor.getColumnIndexOrThrow("username"));
-            String dateOfRegister = cursor.getString(cursor.getColumnIndexOrThrow("dateOfRegister"));
-            int avatar = cursor.getInt(cursor.getColumnIndexOrThrow("avatar"));
-            int community_id = cursor.getInt(cursor.getColumnIndexOrThrow("community_id"));
-            String fullname = cursor.getString(cursor.getColumnIndexOrThrow("fullname"));
-            String email = cursor.getString(cursor.getColumnIndexOrThrow("email"));
-            String password = cursor.getString(cursor.getColumnIndexOrThrow("password"));
-
-            user = new User(id, username, dateOfRegister, avatar, community_id, fullname, email, password);
-        }
-
-        sharedPreferences = getContext().getSharedPreferences("user", getContext().MODE_PRIVATE);
-
-        cursor.close();
     }
 
     @Override
@@ -85,6 +63,7 @@ public class ProfileFragment extends Fragment {
         }
 
         logout_button.setOnClickListener(v -> {
+            sharedPreferences = getContext().getSharedPreferences("user", getContext().MODE_PRIVATE);
             sharedPreferences.edit().clear().apply();
             Intent intent = new Intent(getContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

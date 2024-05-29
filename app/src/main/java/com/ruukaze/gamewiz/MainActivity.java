@@ -16,6 +16,7 @@ import com.ruukaze.gamewiz.fragments.CommunityFragment;
 import com.ruukaze.gamewiz.fragments.DiscoverFragment;
 import com.ruukaze.gamewiz.fragments.GamesFragment;
 import com.ruukaze.gamewiz.fragments.ProfileFragment;
+import com.ruukaze.gamewiz.models.User;
 
 public class MainActivity extends AppCompatActivity {
     private ImageView home_img, community_img, games_img, profile_img; // FOOTER IMAGES
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isAuth;
     private int user_id;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
 
         isAuth = sharedPreferences.getBoolean("isAuth", false);
         user_id = sharedPreferences.getInt("user_id", 0);
+
+        if (isAuth) {
+            user = loadUser();
+        }
 
         toggle_home.setOnClickListener(v -> inflateHomeFragment());
         toggle_community.setOnClickListener(v -> inflateCommunityFragment());
@@ -83,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         inactiveFooter();
         community_img.setImageResource(R.drawable.vector_community_active);
         if (isAuth) {
-            setFragmentWithAnimation(new CommunityFragment(user_id), true);
+            setFragmentWithAnimation(new CommunityFragment(user), true);
         } else {
             inflateAccessDeniedFragment();
         }
@@ -93,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         inactiveFooter();
         games_img.setImageResource(R.drawable.vector_games_active);
         if (isAuth) {
-            setFragmentWithAnimation(new GamesFragment(user_id), false);
+            setFragmentWithAnimation(new GamesFragment(user), false);
         } else {
             inflateAccessDeniedFragment();
         }
@@ -104,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         profile_img.setImageResource(R.drawable.vector_profile_active);
 
         if (isAuth) {
-            setFragmentWithAnimation(new ProfileFragment(user_id), false);
+            setFragmentWithAnimation(new ProfileFragment(user), false);
         } else {
             inflateAccessDeniedFragment();
         }
@@ -112,5 +118,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void inflateAccessDeniedFragment() {
         setFragmentWithAnimation(new AccessDeniedFragment(), false);
+    }
+
+    public User loadUser() {
+        dbHelper = new DatabaseHelper(this);
+        Cursor cursor = dbHelper.getReadableDatabase().rawQuery("SELECT * FROM users WHERE id = ?", new String[]{String.valueOf(user_id)});
+
+        if (cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+            String username = cursor.getString(cursor.getColumnIndexOrThrow("username"));
+            String dateOfRegister = cursor.getString(cursor.getColumnIndexOrThrow("dateOfRegister"));
+            int avatar = cursor.getInt(cursor.getColumnIndexOrThrow("avatar"));
+            int community_id = cursor.getInt(cursor.getColumnIndexOrThrow("community_id"));
+            String fullname = cursor.getString(cursor.getColumnIndexOrThrow("fullname"));
+            String email = cursor.getString(cursor.getColumnIndexOrThrow("email"));
+            String password = cursor.getString(cursor.getColumnIndexOrThrow("password"));
+
+            return new User(id, username, dateOfRegister, avatar, community_id, fullname, email, password);
+        }
+        cursor.close();
+        return null;
     }
 }
