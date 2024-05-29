@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ruukaze.gamewiz.R;
 import com.ruukaze.gamewiz.databaseUtils.DatabaseHelper;
 import com.ruukaze.gamewiz.models.Post;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -45,7 +46,7 @@ public class CommunityPostAdapter extends RecyclerView.Adapter<CommunityPostAdap
             holder.user_profile.setImageResource(cursor.getInt(cursor.getColumnIndexOrThrow("avatar")));
             holder.user_name.setText(cursor.getString(cursor.getColumnIndexOrThrow("username")));
             holder.community_post.setText(post.getPost());
-            holder.postImageView.setImageResource(post.getImage());
+            Picasso.get().load(post.getImage()).into(holder.postImageView);
         }
         cursor.close();
     }

@@ -83,7 +83,7 @@ public class CommunityFragment extends Fragment {
                     int community_id = cursor.getInt(cursor.getColumnIndexOrThrow("community_id"));
                     int user_id = cursor.getInt(cursor.getColumnIndexOrThrow("user_id"));
                     String post = cursor.getString(cursor.getColumnIndexOrThrow("post"));
-                    int image = cursor.getInt(cursor.getColumnIndexOrThrow("image"));
+                    String image = cursor.getString(cursor.getColumnIndexOrThrow("image"));
 
                     posts.add(new Post(id, community_id, user_id, post, image));
                 } while (cursor.moveToNext());

@@ -5,9 +5,9 @@ public class Post {
     private int community_id;
     private int user_id;
     private String post;
-    private int image;
+    private String image;
 
-    public Post(int id, int community_id, int user_id, String post, int image) {
+    public Post(int id, int community_id, int user_id, String post, String image) {
         this.id = id;
         this.community_id = community_id;
         this.user_id = user_id;
@@ -47,11 +47,11 @@ public class Post {
         this.post = post;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }

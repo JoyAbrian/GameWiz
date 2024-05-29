@@ -46,7 +46,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         uploadDummyCommunities(db);
 
         // CREATE AND INSERT DUMMY POSTS
-        db.execSQL("CREATE TABLE " + TABLE_POSTS + " (id INTEGER PRIMARY KEY AUTOINCREMENT, community_id INTEGER, user_id INTEGER, post TEXT, image INTEGER, FOREIGN KEY (community_id) REFERENCES communities(id), FOREIGN KEY (user_id) REFERENCES users(id))");
+        db.execSQL("CREATE TABLE " + TABLE_POSTS + " (id INTEGER PRIMARY KEY AUTOINCREMENT, community_id INTEGER, user_id INTEGER, post TEXT, image TEXT, FOREIGN KEY (community_id) REFERENCES communities(id), FOREIGN KEY (user_id) REFERENCES users(id))");
         uploadDummyPosts(db);
     }
 
