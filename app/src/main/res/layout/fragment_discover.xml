@@ -132,6 +132,7 @@
                     android:layout_marginStart="15dp"/>
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_users"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:listitem="@layout/template_community_person"
