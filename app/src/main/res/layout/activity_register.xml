@@ -63,7 +63,8 @@
                         android:layout_height="match_parent"
                         android:layout_toEndOf="@id/icon_first_name"
                         android:hint="First Name"
-                        android:paddingStart="8dp"/>
+                        android:paddingStart="8dp"
+                        android:singleLine="true" />
 
                 </RelativeLayout>
 
@@ -88,7 +89,8 @@
                         android:layout_height="match_parent"
                         android:layout_toEndOf="@id/icon_last_name"
                         android:hint="Last Name"
-                        android:paddingStart="8dp"/>
+                        android:paddingStart="8dp"
+                        android:singleLine="true" />
 
                 </RelativeLayout>
 
@@ -115,7 +117,8 @@
                     android:layout_height="match_parent"
                     android:layout_toEndOf="@id/icon_username"
                     android:hint="Username"
-                    android:paddingStart="8dp"/>
+                    android:paddingStart="8dp"
+                    android:singleLine="true"/>
 
             </RelativeLayout>
 
@@ -140,7 +143,8 @@
                     android:layout_height="match_parent"
                     android:layout_toEndOf="@id/icon_email"
                     android:hint="E-Mail"
-                    android:paddingStart="8dp"/>
+                    android:paddingStart="8dp"
+                    android:singleLine="true"/>
 
             </RelativeLayout>
 
@@ -166,6 +170,7 @@
                     android:layout_toEndOf="@id/icon_password"
                     android:hint="Password"
                     android:paddingStart="8dp"
+                    android:singleLine="true"
                     android:inputType="textPassword"/>
 
             </RelativeLayout>

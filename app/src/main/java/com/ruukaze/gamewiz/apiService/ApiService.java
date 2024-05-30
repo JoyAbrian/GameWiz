@@ -11,5 +11,5 @@ import retrofit2.http.Query;
 
 public interface ApiService {
     @GET("games")
-    Call<ArrayList<Game>> getFeaturedGames(@Query("fields") String fields, @Query("where") String where, @Query("limit") int limit);
+    Call<ArrayList<Game>> searchByNameGames(@Query("fields") String fields, @Query("search") String where, @Query("limit") int limit);
 }

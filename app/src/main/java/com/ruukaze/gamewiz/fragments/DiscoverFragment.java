@@ -26,7 +26,6 @@ import retrofit2.Retrofit;
 
 public class DiscoverFragment extends Fragment {
     private RecyclerView rv_featured_games;
-    private GameGridAdapter gameGridAdapter;
 
     public DiscoverFragment() {
         // Required empty public constructor
@@ -57,11 +56,11 @@ public class DiscoverFragment extends Fragment {
         ApiService apiService = retrofit.create(ApiService.class);
 
         String fields = "name, cover.*, release_dates.*";
-        String where = "where name = 'FIFA 23'";
+        String name = "FIFA 23";
         int limit = 10;
 
         // Fetch Featured Games
-        Call<ArrayList<Game>> call = apiService.getFeaturedGames(fields, where, limit);
+        Call<ArrayList<Game>> call = apiService.searchByNameGames(fields, name, limit);
         call.enqueue(new Callback<ArrayList<Game>>() {
             @Override
             public void onResponse(Call<ArrayList<Game>> call, Response<ArrayList<Game>> response) {
