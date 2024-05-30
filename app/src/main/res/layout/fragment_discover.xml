@@ -171,7 +171,8 @@
                     android:layout_height="wrap_content"
                     tools:listitem="@layout/template_community_group"
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:orientation="horizontal"/>
+                    tools:orientation="horizontal"
+                    android:layout_marginBottom="80dp"/>
 
             </LinearLayout>
 
