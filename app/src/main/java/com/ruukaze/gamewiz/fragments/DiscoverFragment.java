@@ -1,5 +1,8 @@
 package com.ruukaze.gamewiz.fragments;
 
+import static com.ruukaze.gamewiz.databaseUtils.DBDataSource.getCommunities;
+import static com.ruukaze.gamewiz.databaseUtils.DBDataSource.getUsers;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -21,6 +24,7 @@ import com.ruukaze.gamewiz.adapter.GameGridAdapter;
 import com.ruukaze.gamewiz.adapter.UserAdapter;
 import com.ruukaze.gamewiz.apiService.ApiClient;
 import com.ruukaze.gamewiz.apiService.ApiService;
+import com.ruukaze.gamewiz.databaseUtils.DBDataSource;
 import com.ruukaze.gamewiz.databaseUtils.DataSource;
 import com.ruukaze.gamewiz.databaseUtils.DatabaseHelper;
 import com.ruukaze.gamewiz.models.Community;
@@ -64,7 +68,7 @@ public class DiscoverFragment extends Fragment {
 
         toggle_search = view.findViewById(R.id.toggle_search);
 
-        dbHelper = new DatabaseHelper(getContext());
+        DBDataSource.initialize(getContext());
 
         toggle_search.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), SearchActivity.class);
@@ -84,41 +88,4 @@ public class DiscoverFragment extends Fragment {
     }
 
 
-    private ArrayList<User> getUsers() {
-        ArrayList<User> users = new ArrayList<>();
-        Cursor cursor = dbHelper.getReadableDatabase().rawQuery("SELECT * FROM users ORDER BY id DESC LIMIT 15", null);
-        if (cursor.moveToFirst()) {
-            do {
-                // Get user data
-                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
-                String username = cursor.getString(cursor.getColumnIndexOrThrow("username"));
-                String dateOfRegister = cursor.getString(cursor.getColumnIndexOrThrow("dateOfRegister"));
-                int avatar = cursor.getInt(cursor.getColumnIndexOrThrow("avatar"));
-                int community_id = cursor.getInt(cursor.getColumnIndexOrThrow("community_id"));
-                String fullname = cursor.getString(cursor.getColumnIndexOrThrow("fullname"));
-                String email = cursor.getString(cursor.getColumnIndexOrThrow("email"));
-                String password = cursor.getString(cursor.getColumnIndexOrThrow("password"));
-
-                users.add(new User(id, username, dateOfRegister, avatar, community_id, fullname, email, password));
-            } while (cursor.moveToNext());
-        }
-        return users;
-    }
-
-    private ArrayList<Community> getCommunities() {
-        ArrayList<Community> communities = new ArrayList<>();
-        Cursor cursor = dbHelper.getReadableDatabase().rawQuery("SELECT * FROM communities ORDER BY id DESC LIMIT 15", null);
-        if (cursor.moveToFirst()) {
-            do {
-                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
-                String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
-                String description = cursor.getString(cursor.getColumnIndexOrThrow("description"));
-                int icon = cursor.getInt(cursor.getColumnIndexOrThrow("icon"));
-                int leader_id = cursor.getInt(cursor.getColumnIndexOrThrow("leader_id"));
-
-                communities.add(new Community(id, name, description, icon, leader_id));
-            } while (cursor.moveToNext());
-        }
-        return communities;
-    }
 }
