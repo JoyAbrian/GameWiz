@@ -16,11 +16,14 @@ import android.widget.ImageView;
 
 import com.ruukaze.gamewiz.R;
 import com.ruukaze.gamewiz.SearchActivity;
+import com.ruukaze.gamewiz.adapter.CommunityDiscoverAdapter;
 import com.ruukaze.gamewiz.adapter.GameGridAdapter;
 import com.ruukaze.gamewiz.adapter.UserAdapter;
 import com.ruukaze.gamewiz.apiService.ApiClient;
 import com.ruukaze.gamewiz.apiService.ApiService;
+import com.ruukaze.gamewiz.databaseUtils.DataSource;
 import com.ruukaze.gamewiz.databaseUtils.DatabaseHelper;
+import com.ruukaze.gamewiz.models.Community;
 import com.ruukaze.gamewiz.models.Game;
 import com.ruukaze.gamewiz.models.User;
 
@@ -35,6 +38,7 @@ public class DiscoverFragment extends Fragment {
     private ImageView toggle_search;
     private RecyclerView rv_featured_games;
     private RecyclerView rv_users;
+    private RecyclerView rv_communities;
     private DatabaseHelper dbHelper;
 
     public DiscoverFragment() {
@@ -56,6 +60,8 @@ public class DiscoverFragment extends Fragment {
 
         rv_featured_games = view.findViewById(R.id.rv_featured_games);
         rv_users = view.findViewById(R.id.rv_users);
+        rv_communities = view.findViewById(R.id.rv_communities);
+
         toggle_search = view.findViewById(R.id.toggle_search);
 
         dbHelper = new DatabaseHelper(getContext());
@@ -66,43 +72,17 @@ public class DiscoverFragment extends Fragment {
         });
 
         rv_featured_games.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        fetchData();
+        DataSource.getFeaturedGames(rv_featured_games, "featured");
 
         rv_users.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rv_users.setAdapter(new UserAdapter(getUsers()));
 
+        rv_communities.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rv_communities.setAdapter(new CommunityDiscoverAdapter(getCommunities(), getContext()));
+
         return view;
     }
 
-    private void fetchData() {
-        Retrofit retrofit = ApiClient.getClient();
-        ApiService apiService = retrofit.create(ApiService.class);
-
-        String fields = "name, cover.*, release_dates.*";
-        String name = "FIFA 23";
-        int limit = 10;
-
-        // Fetch Featured Games
-        Call<ArrayList<Game>> call = apiService.searchByNameGames(fields, name, limit);
-        call.enqueue(new Callback<ArrayList<Game>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Game>> call, Response<ArrayList<Game>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    ArrayList<Game> games = response.body();
-                    rv_featured_games.setAdapter(new GameGridAdapter(games));
-                } else {
-                    Log.e("DiscoverFragment", "Failed to fetch games: " + response.message());
-                    // Handle error
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Game>> call, Throwable t) {
-                Log.e("DiscoverFragment", "Error fetching games", t);
-                // Handle error
-            }
-        });
-    }
 
     private ArrayList<User> getUsers() {
         ArrayList<User> users = new ArrayList<>();
@@ -123,5 +103,22 @@ public class DiscoverFragment extends Fragment {
             } while (cursor.moveToNext());
         }
         return users;
+    }
+
+    private ArrayList<Community> getCommunities() {
+        ArrayList<Community> communities = new ArrayList<>();
+        Cursor cursor = dbHelper.getReadableDatabase().rawQuery("SELECT * FROM communities ORDER BY id DESC LIMIT 15", null);
+        if (cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+                String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+                String description = cursor.getString(cursor.getColumnIndexOrThrow("description"));
+                int icon = cursor.getInt(cursor.getColumnIndexOrThrow("icon"));
+                int leader_id = cursor.getInt(cursor.getColumnIndexOrThrow("leader_id"));
+
+                communities.add(new Community(id, name, description, icon, leader_id));
+            } while (cursor.moveToNext());
+        }
+        return communities;
     }
 }

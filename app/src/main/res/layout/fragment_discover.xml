@@ -167,12 +167,13 @@
                     android:layout_marginStart="15dp"/>
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_communities"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     tools:listitem="@layout/template_community_group"
                     tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:orientation="horizontal"
-                    android:layout_marginBottom="80dp"/>
+                    android:layout_marginBottom="100dp"/>
 
             </LinearLayout>
 

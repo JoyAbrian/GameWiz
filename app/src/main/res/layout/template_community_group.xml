@@ -11,9 +11,9 @@
         android:layout_margin="10dp">
 
         <ImageView
-            android:id="@+id/my_image_view"
+            android:id="@+id/community_banner"
             android:layout_width="100dp"
-            android:layout_height="80dp"
+            android:layout_height="100dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_launcher_background" />
 
@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_toEndOf="@id/my_image_view"
+            android:layout_toEndOf="@id/community_banner"
             android:layout_marginHorizontal="10dp"
             android:layout_marginTop="10dp">
 
@@ -35,19 +35,19 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/community_leader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:text="Leader Name"
-                android:textSize="12sp" />
-
-            <TextView
                 android:id="@+id/community_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-thin"
                 android:text="99 Members"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/community_posts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-thin"
+                android:text="99 Posts"
                 android:textSize="10sp" />
 
         </LinearLayout>
