@@ -49,8 +49,6 @@ public class GameSearchAdapter extends RecyclerView.Adapter<GameSearchAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView game_cover;
         private TextView game_title;
-        private TextView game_detail;
-        private TextView game_platform;
         private ImageView toggle_add;
 
         public ViewHolder(@NonNull View itemView) {
