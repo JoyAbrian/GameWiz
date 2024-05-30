@@ -22,6 +22,7 @@
             android:layout_marginStart="40dp"/>
 
         <ImageView
+            android:id="@+id/toggle_search"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/vector_search"

@@ -1,5 +1,6 @@
 package com.ruukaze.gamewiz.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,8 +11,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.ruukaze.gamewiz.R;
+import com.ruukaze.gamewiz.SearchActivity;
 import com.ruukaze.gamewiz.adapter.GameGridAdapter;
 import com.ruukaze.gamewiz.apiService.ApiClient;
 import com.ruukaze.gamewiz.apiService.ApiService;
@@ -25,6 +28,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class DiscoverFragment extends Fragment {
+    private ImageView toggle_search;
     private RecyclerView rv_featured_games;
 
     public DiscoverFragment() {
@@ -45,6 +49,13 @@ public class DiscoverFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_discover, container, false);
 
         rv_featured_games = view.findViewById(R.id.rv_featured_games);
+        toggle_search = view.findViewById(R.id.toggle_search);
+
+        toggle_search.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), SearchActivity.class);
+            startActivity(intent);
+        });
+
         rv_featured_games.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         fetchData();
 

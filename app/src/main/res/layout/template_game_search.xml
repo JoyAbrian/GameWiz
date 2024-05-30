@@ -14,7 +14,7 @@
         android:layout_margin="10dp">
 
         <ImageView
-            android:id="@+id/my_image_view"
+            android:id="@+id/game_cover"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:scaleType="centerCrop"
@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:orientation="vertical"
-            android:layout_toEndOf="@id/my_image_view"
+            android:layout_toEndOf="@id/game_cover"
             android:layout_marginHorizontal="10dp"
             android:gravity="center_vertical">
 
@@ -56,6 +56,7 @@
         </LinearLayout>
 
         <ImageView
+            android:id="@+id/toggle_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/vector_add"
