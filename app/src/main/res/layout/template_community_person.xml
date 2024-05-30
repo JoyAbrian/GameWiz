@@ -7,18 +7,19 @@
     android:layout_margin="20dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/my_image_view"
+        android:id="@+id/user_profile"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_launcher_background"/>
 
     <TextView
-        android:id="@+id/user_title"
-        android:layout_width="wrap_content"
+        android:id="@+id/user_name"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-medium"
-        android:text="Game Title"
+        android:gravity="center"
+        android:text="Username"
         android:textSize="14sp"
         android:textStyle="bold"
         android:layout_marginTop="15dp"/>
