@@ -17,6 +17,10 @@ public class InvolvedCompany {
         this.supporting = supporting;
     }
 
+    public InvolvedCompany(int companyId) {
+        this.id = companyId;
+    }
+
     public int getId() {
         return id;
     }

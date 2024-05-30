@@ -10,10 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ruukaze.gamewiz.R;
-import com.ruukaze.gamewiz.models.Company;
 import com.ruukaze.gamewiz.models.Game;
-import com.ruukaze.gamewiz.models.InvolvedCompany;
-import com.ruukaze.gamewiz.models.Platform;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -38,33 +35,6 @@ public class GameSearchAdapter extends RecyclerView.Adapter<GameSearchAdapter.Vi
 
         if (game != null) {
             holder.game_title.setText(game.getName());
-
-            if (game.getRelease_dates() != null && game.getInvolved_companies() != null) {
-                String releaseDate = game.getRelease_dates().get(0).getHuman();
-                for (InvolvedCompany involvedCompany: game.getInvolved_companies()) {
-                    if (involvedCompany.isDeveloper()) {
-                        if (involvedCompany.getCompany() != null) {
-                            String developer = involvedCompany.getCompany().getName();
-                            holder.game_detail.setText(releaseDate + " | " + developer);
-                            break;
-                        }
-                    }
-                }
-            } else {
-                holder.game_detail.setText("Not Found");
-            }
-
-            if (game.getPlatforms() != null) {
-                StringBuilder platformBuilder = new StringBuilder();
-                for (Platform platform: game.getPlatforms()) {
-                    platformBuilder.append(platform.getName()).append(", ");
-                }
-                String platformString = platformBuilder.toString();
-                holder.game_platform.setText(platformString.substring(0, platformString.length() - 2));
-            } else {
-                holder.game_platform.setText("Not Found");
-            }
-
             if (game.getCover() != null) {
                 Picasso.get().load("https://images.igdb.com/igdb/image/upload/t_cover_big/" + game.getCover().getImage_id() + ".jpg").into(holder.game_cover);
             }
@@ -87,8 +57,6 @@ public class GameSearchAdapter extends RecyclerView.Adapter<GameSearchAdapter.Vi
             super(itemView);
             game_cover = itemView.findViewById(R.id.game_cover);
             game_title = itemView.findViewById(R.id.game_title);
-            game_detail = itemView.findViewById(R.id.game_detail);
-            game_platform = itemView.findViewById(R.id.game_platform);
             toggle_add = itemView.findViewById(R.id.toggle_add);
         }
     }

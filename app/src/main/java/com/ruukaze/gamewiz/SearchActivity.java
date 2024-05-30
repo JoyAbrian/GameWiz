@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +30,7 @@ import retrofit2.Retrofit;
 
 public class SearchActivity extends AppCompatActivity {
     private EditText search_games;
+    private ImageView toggle_back;
     private RecyclerView searchResults;
 
     @Override
@@ -37,8 +39,11 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
         search_games = findViewById(R.id.search_games);
+        toggle_back = findViewById(R.id.toggle_back);
         searchResults = findViewById(R.id.searchResults);
         searchResults.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
+        toggle_back.setOnClickListener(v -> finish());
 
         fetchData("");
         search_games.addTextChangedListener(new TextWatcher() {
@@ -59,7 +64,7 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    private void fetchData(String name) {
+    private void fetchData(String searchQuery) {
         Retrofit retrofit = ApiClient.getClient();
         ApiService apiService = retrofit.create(ApiService.class);
 
@@ -67,7 +72,7 @@ public class SearchActivity extends AppCompatActivity {
         int limit = 10;
 
         // Fetch Featured Games
-        Call<ArrayList<Game>> call = apiService.searchByNameGames(fields, name, limit);
+        Call<ArrayList<Game>> call = apiService.searchByNameGames(fields, searchQuery, limit);
         call.enqueue(new Callback<ArrayList<Game>>() {
             @Override
             public void onResponse(Call<ArrayList<Game>> call, Response<ArrayList<Game>> response) {

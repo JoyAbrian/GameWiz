@@ -28,6 +28,8 @@ public class Game {
         this.summary = summary;
     }
 
+    public Game() {}
+
     public int getId() {
         return id;
     }
