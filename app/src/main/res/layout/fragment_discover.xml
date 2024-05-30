@@ -41,37 +41,71 @@
             android:orientation="vertical">
 
             <!--    ECHO FRIENDLY GAMES SECTION-->
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-black"
-                    android:text="Echo Friendly Games"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="20dp"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:text="Save our world. Play eco-friendly games."
-                    android:textSize="15dp"
-                    android:layout_marginStart="15dp"/>
-
-                <androidx.recyclerview.widget.RecyclerView
+                <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:listitem="@layout/template_game_library"
-                    tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:orientation="horizontal"/>
+                    android:layout_height="240dp"
+                    android:src="@drawable/no_cover"/>
 
-            </LinearLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    android:src="#C65CAE5F"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="bottom"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginBottom="15dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="GAME TITLE"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Developer Name"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="top"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-black"
+                        android:text="Echo Friendly Games"
+                        android:textSize="20dp"
+                        android:textStyle="bold"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Save our world. Play eco-friendly games."
+                        android:textSize="15dp"/>
+
+                </LinearLayout>
+
+            </FrameLayout>
 
             <!--    FEATURED GAMES SECTION-->
             <LinearLayout
