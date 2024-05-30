@@ -19,6 +19,7 @@ import com.ruukaze.gamewiz.adapter.GameGridAdapter;
 import com.ruukaze.gamewiz.adapter.GameSearchAdapter;
 import com.ruukaze.gamewiz.apiService.ApiClient;
 import com.ruukaze.gamewiz.apiService.ApiService;
+import com.ruukaze.gamewiz.databaseUtils.DataSource;
 import com.ruukaze.gamewiz.models.Game;
 
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class SearchActivity extends AppCompatActivity {
 
         toggle_back.setOnClickListener(v -> finish());
 
-        fetchData("");
+        DataSource.getGamesByName(searchResults, "");
         search_games.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -54,41 +55,12 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                fetchData(search_games.getText().toString());
+                DataSource.getGamesByName(searchResults,search_games.getText().toString());
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 // Do nothing
-            }
-        });
-    }
-
-    private void fetchData(String searchQuery) {
-        Retrofit retrofit = ApiClient.getClient();
-        ApiService apiService = retrofit.create(ApiService.class);
-
-        String fields = "name, cover.*";
-        int limit = 10;
-
-        // Fetch Featured Games
-        Call<ArrayList<Game>> call = apiService.searchByNameGames(fields, searchQuery, limit);
-        call.enqueue(new Callback<ArrayList<Game>>() {
-            @Override
-            public void onResponse(Call<ArrayList<Game>> call, Response<ArrayList<Game>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    ArrayList<Game> games = response.body();
-                    searchResults.setAdapter(new GameSearchAdapter(games));
-                } else {
-                    Log.e("DiscoverFragment", "Failed to fetch games: " + response.message());
-                    // Handle error
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<Game>> call, Throwable t) {
-                Log.e("DiscoverFragment", "Error fetching games", t);
-                // Handle error
             }
         });
     }
