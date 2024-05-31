@@ -66,7 +66,6 @@ public class DataSource {
                     Picasso.get().load("https://images.igdb.com/igdb/image/upload/t_screenshot_big/" + games.get(0).getScreenshots().get(0).getImage_id() + ".jpg").into(eco_friendly_games_image);
                     eco_friendly_games_title.setText(games.get(0).getName());
                     eco_friendly_games_date.setText(games.get(0).getRelease_dates().get(0).getHuman());
-
                 } else {
                     Log.e("DiscoverFragment", "Failed to fetch games: " + response.message());
                     // Handle error
