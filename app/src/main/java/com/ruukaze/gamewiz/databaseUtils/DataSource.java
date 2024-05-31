@@ -39,12 +39,6 @@ public class DataSource {
                 } else {
                     Log.e("DiscoverFragment", "Failed to fetch games: " + response.message());
                     // Handle error
-                    try {
-                        String errorBody = response.errorBody().string();
-                        Log.e("DiscoverFragment", "Error body: " + errorBody);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                 }
             }
 
@@ -57,7 +51,7 @@ public class DataSource {
     }
 
     public static void getTopGames(RecyclerView searchResults) {
-        String bodyString = "fields name, cover.*;" +
+        String bodyString = "fields name, cover.*, release_dates.*;" +
                 " limit 10;" +
                 " where version_parent = null & platforms = (48, 167)" +
                 " & rating != null & rating_count > 100;" +
@@ -73,15 +67,8 @@ public class DataSource {
                     searchResults.setAdapter(new GameGridAdapter(games));
                 } else {
                     Log.e("DiscoverFragment", "Failed to fetch games: " + response.message());
-                    // Log the response body for more details
-                    try {
-                        String errorBody = response.errorBody().string();
-                        Log.e("DiscoverFragment", "Error body: " + errorBody);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                     // Handle error
-                }
+                    }
             }
 
             @Override
