@@ -1,5 +1,6 @@
 package com.ruukaze.gamewiz.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ruukaze.gamewiz.DetailActivity;
 import com.ruukaze.gamewiz.R;
 import com.ruukaze.gamewiz.models.Game;
 import com.squareup.picasso.Picasso;
@@ -50,6 +52,12 @@ public class GameGridAdapter extends RecyclerView.Adapter<GameGridAdapter.ViewHo
             if (game.getCover() != null) {
                 Picasso.get().load("https://images.igdb.com/igdb/image/upload/t_cover_big/" + game.getCover().getImage_id() + ".jpg").into(holder.game_cover);
             }
+
+            holder.itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(v.getContext(), DetailActivity.class);
+                intent.putExtra("game_id", game.getId());
+                v.getContext().startActivity(intent);
+            });
         }
     }
 
