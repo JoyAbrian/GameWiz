@@ -10,8 +10,12 @@ import com.ruukaze.gamewiz.apiService.ApiClient;
 import com.ruukaze.gamewiz.apiService.ApiService;
 import com.ruukaze.gamewiz.models.Game;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,20 +25,26 @@ public class DataSource {
     private static final Retrofit retrofit = ApiClient.getClient();
     private static final ApiService apiService = retrofit.create(ApiService.class);
 
-    public static void getFeaturedGames(RecyclerView searchResults, String name) {
+    public static void getGamesByName(RecyclerView searchResults, String name) {
         String fields = "name, cover.*;";
         int limit = 10;
 
-        Call<ArrayList<Game>> call = apiService.searchByNameGames(fields, name, limit);
-        call.enqueue(new Callback<ArrayList<Game>>() {
+        Call<ArrayList<Game>> call2 = apiService.searchByNameGamesSimilarity(fields, name, limit);
+        call2.enqueue(new Callback<ArrayList<Game>>() {
             @Override
             public void onResponse(Call<ArrayList<Game>> call, Response<ArrayList<Game>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     ArrayList<Game> games = response.body();
-                    searchResults.setAdapter(new GameGridAdapter(games));
+                    searchResults.setAdapter(new GameSearchAdapter(games));
                 } else {
                     Log.e("DiscoverFragment", "Failed to fetch games: " + response.message());
                     // Handle error
+                    try {
+                        String errorBody = response.errorBody().string();
+                        Log.e("DiscoverFragment", "Error body: " + errorBody);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
@@ -46,20 +56,30 @@ public class DataSource {
         });
     }
 
-    public static void getGamesByName(RecyclerView searchResults, String name) {
+    public static void getTopGames(RecyclerView searchResults) {
+        String bodyString = "fields name, cover.*;" +
+                " limit 10;" +
+                " where version_parent = null & platforms = (48, 167)" +
+                " & rating != null & rating_count > 100;" +
+                " sort rating desc;";
 
-        String fields = "name, cover.*;";
-        int limit = 10;
-
-        Call<ArrayList<Game>> call = apiService.searchByNameGames(fields, name, limit);
+        RequestBody body = RequestBody.create(MediaType.parse("text/plain; charset=utf-8"), bodyString);
+        Call<ArrayList<Game>> call = apiService.getTopGames(body);
         call.enqueue(new Callback<ArrayList<Game>>() {
             @Override
             public void onResponse(Call<ArrayList<Game>> call, Response<ArrayList<Game>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     ArrayList<Game> games = response.body();
-                    searchResults.setAdapter(new GameSearchAdapter(games));
+                    searchResults.setAdapter(new GameGridAdapter(games));
                 } else {
                     Log.e("DiscoverFragment", "Failed to fetch games: " + response.message());
+                    // Log the response body for more details
+                    try {
+                        String errorBody = response.errorBody().string();
+                        Log.e("DiscoverFragment", "Error body: " + errorBody);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     // Handle error
                 }
             }

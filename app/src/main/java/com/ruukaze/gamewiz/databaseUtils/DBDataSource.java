@@ -36,6 +36,7 @@ public class DBDataSource {
             } while (cursor.moveToNext());
         }
         cursor.close();
+        db.close();
         return users;
     }
 
@@ -55,6 +56,7 @@ public class DBDataSource {
             } while (cursor.moveToNext());
         }
         cursor.close();
+        db.close();
         return communities;
     }
 }

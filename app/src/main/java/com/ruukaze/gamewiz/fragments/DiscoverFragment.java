@@ -76,7 +76,7 @@ public class DiscoverFragment extends Fragment {
         });
 
         rv_featured_games.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        DataSource.getFeaturedGames(rv_featured_games, "featured");
+        DataSource.getTopGames(rv_featured_games);
 
         rv_users.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rv_users.setAdapter(new UserAdapter(getUsers()));
