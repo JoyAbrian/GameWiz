@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.ruukaze.gamewiz.R;
 import com.ruukaze.gamewiz.SearchActivity;
@@ -30,6 +31,7 @@ import com.ruukaze.gamewiz.databaseUtils.DatabaseHelper;
 import com.ruukaze.gamewiz.models.Community;
 import com.ruukaze.gamewiz.models.Game;
 import com.ruukaze.gamewiz.models.User;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -40,6 +42,9 @@ import retrofit2.Retrofit;
 
 public class DiscoverFragment extends Fragment {
     private ImageView toggle_search;
+    private ImageView eco_friendly_games_image;
+    private TextView eco_friendly_games_title;
+    private TextView eco_friendly_games_date;
     private RecyclerView rv_featured_games;
     private RecyclerView rv_users;
     private RecyclerView rv_communities;
@@ -62,6 +67,10 @@ public class DiscoverFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_discover, container, false);
 
+        eco_friendly_games_image = view.findViewById(R.id.eco_friendly_games_image);
+        eco_friendly_games_title = view.findViewById(R.id.eco_friendly_games_title);
+        eco_friendly_games_date = view.findViewById(R.id.eco_friendly_games_date);
+
         rv_featured_games = view.findViewById(R.id.rv_featured_games);
         rv_users = view.findViewById(R.id.rv_users);
         rv_communities = view.findViewById(R.id.rv_communities);
@@ -75,12 +84,18 @@ public class DiscoverFragment extends Fragment {
             startActivity(intent);
         });
 
+        // Eco-Friendly Games
+        DataSource.getEconestGames(eco_friendly_games_image, eco_friendly_games_title, eco_friendly_games_date);
+
+        // Featured Games
         rv_featured_games.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         DataSource.getTopGames(rv_featured_games);
 
+        // Featured Users
         rv_users.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rv_users.setAdapter(new UserAdapter(getUsers()));
 
+        // Featured Communities
         rv_communities.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rv_communities.setAdapter(new CommunityDiscoverAdapter(getCommunities(), getContext()));
 
