@@ -29,7 +29,7 @@ public class DataSource {
     private static final ApiService apiService = retrofit.create(ApiService.class);
 
     public static void getGamesByName(RecyclerView searchResults, String name) {
-        String fields = "name, cover.*;";
+        String fields = "id, name, cover.*;";
         int limit = 10;
 
         Call<ArrayList<Game>> call = apiService.searchByNameGamesSimilarity(fields, name, limit);
@@ -54,7 +54,7 @@ public class DataSource {
     }
 
     public static void getEconestGames(ImageView eco_friendly_games_image, TextView eco_friendly_games_title, TextView eco_friendly_games_date) {
-        String bodyString = "fields name, screenshots.*, release_dates.*; where id = 204554;";
+        String bodyString = "fields id, name, screenshots.*, release_dates.*; where id = 204554;";
 
         RequestBody body = RequestBody.create(MediaType.parse("text/plain; charset=utf-8"), bodyString);
         Call<ArrayList<Game>> call = apiService.getTopGames(body);
