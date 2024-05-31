@@ -32,7 +32,7 @@ public class ScreenshotAdapter extends RecyclerView.Adapter<ScreenshotAdapter.Vi
     public void onBindViewHolder(@NonNull ScreenshotAdapter.ViewHolder holder, int position) {
         Cover screenshot = screenshots.get(position);
 
-        String url = "https://images.igdb.com/igdb/image/upload/t_cover_big/" + screenshot.getImage_id() + ".jpg";
+        String url = "https://images.igdb.com/igdb/image/upload/t_screenshot_huge/" + screenshot.getImage_id() + ".jpg";
         Picasso.get().load(url).into(holder.img_screenshot);
     }
 
