@@ -4,10 +4,12 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ruukaze.gamewiz.adapter.GameGridAdapter;
 import com.ruukaze.gamewiz.adapter.GameSearchAdapter;
+import com.ruukaze.gamewiz.adapter.ScreenshotAdapter;
 import com.ruukaze.gamewiz.apiService.ApiClient;
 import com.ruukaze.gamewiz.apiService.ApiService;
 import com.ruukaze.gamewiz.models.Game;
@@ -99,6 +101,71 @@ public class DataSource {
                     Log.e("DiscoverFragment", "Failed to fetch games: " + response.message());
                     // Handle error
                     }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Game>> call, Throwable t) {
+                Log.e("DiscoverFragment", "Error fetching games", t);
+                // Handle error
+            }
+        });
+    }
+
+    public static void getGamesDetails(int game_id, ImageView cover_banner, ImageView cover_image, TextView game_title, TextView game_release) {
+        String bodyString = "fields id, name, cover.*, screenshots.*, release_dates.*;" +
+                "limit 1;" +
+                "where id = " + game_id + ";";
+
+        RequestBody body = RequestBody.create(MediaType.parse("text/plain; charset=utf-8"), bodyString);
+        Call<ArrayList<Game>> call = apiService.getTopGames(body);
+        call.enqueue(new Callback<ArrayList<Game>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Game>> call, Response<ArrayList<Game>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ArrayList<Game> games = response.body();
+                    Game game = games.get(0);
+
+                    String banner_url = "https://images.igdb.com/igdb/image/upload/t_screenshot_huge/" + game.getScreenshots().get(0).getImage_id() + ".jpg";
+                    String cover_url = "https://images.igdb.com/igdb/image/upload/t_cover_big/" + game.getCover().getImage_id() + ".jpg";
+
+                    Picasso.get().load(banner_url).into(cover_banner);
+                    Picasso.get().load(cover_url).into(cover_image);
+                    game_title.setText(game.getName());
+                    game_release.setText(game.getRelease_dates().get(0).getHuman());
+                } else {
+                    Log.e("DiscoverFragment", "Failed to fetch games: " + response.message());
+                    // Handle error
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Game>> call, Throwable t) {
+                Log.e("DiscoverFragment", "Error fetching games", t);
+                // Handle error
+            }
+        });
+    }
+
+    public static void getGamesScreenshot(int game_id, RecyclerView screenshots) {
+        String bodyString = "fields screenshots.*;" +
+                "limit 1;" +
+                "where id = " + game_id + ";";
+
+        RequestBody body = RequestBody.create(MediaType.parse("text/plain; charset=utf-8"), bodyString);
+        Call<ArrayList<Game>> call = apiService.getTopGames(body);
+        call.enqueue(new Callback<ArrayList<Game>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Game>> call, Response<ArrayList<Game>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ArrayList<Game> games = response.body();
+                    Game game = games.get(0);
+
+                    screenshots.setLayoutManager(new GridLayoutManager(screenshots.getContext(), 2));
+                    screenshots.setAdapter(new ScreenshotAdapter(game.getScreenshots()));
+                } else {
+                    Log.e("DiscoverFragment", "Failed to fetch games: " + response.message());
+                    // Handle error
+                }
             }
 
             @Override

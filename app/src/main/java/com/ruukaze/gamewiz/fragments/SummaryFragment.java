@@ -9,15 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ruukaze.gamewiz.R;
+import com.ruukaze.gamewiz.models.Game;
 
 public class SummaryFragment extends Fragment {
+    private static int game_id;
 
-    public SummaryFragment() {
-        // Required empty public constructor
+    public SummaryFragment(int game_id) {
+        this.game_id = game_id;
     }
 
     public static SummaryFragment newInstance() {
-        return new SummaryFragment();
+        return new SummaryFragment(game_id);
     }
 
     @Override

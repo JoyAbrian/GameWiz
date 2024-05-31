@@ -3,7 +3,7 @@ package com.ruukaze.gamewiz.models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Game {
+public class Game{
     private int id;
     private float aggregated_rating;
     private Cover cover;
