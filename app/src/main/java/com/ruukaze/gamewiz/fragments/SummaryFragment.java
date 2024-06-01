@@ -10,8 +10,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ruukaze.gamewiz.R;
+import com.ruukaze.gamewiz.apiService.DataCallback;
 import com.ruukaze.gamewiz.databaseUtils.DataSource;
 import com.ruukaze.gamewiz.models.Game;
+
+import java.util.ArrayList;
 
 public class SummaryFragment extends Fragment {
     private static int game_id;
@@ -44,7 +47,23 @@ public class SummaryFragment extends Fragment {
         genres_list = view.findViewById(R.id.genres_list);
         platforms_list = view.findViewById(R.id.platforms_list);
 
-        DataSource.getGamesSummary(game_id, summary_text, developers_list, publishers_list, platforms_list);
+        DataSource dataSource = new DataSource();
+        dataSource.getGamesSummary(game_id, new DataCallback() {
+            @Override
+            public void onSuccess(ArrayList<Game> games) {
+                Game game = games.get(0);
+                summary_text.setText(game.getSummary());
+//                developers_list.setText(game.getDevelopers().toString());
+//                publishers_list.setText(game.getPublishers().toString());
+//                genres_list.setText(game.getGenres().toString());
+//                platforms_list.setText(game.getPlatforms().toString());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
 
         return view;
     }

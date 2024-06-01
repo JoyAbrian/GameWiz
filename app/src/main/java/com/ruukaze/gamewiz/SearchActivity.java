@@ -19,6 +19,7 @@ import com.ruukaze.gamewiz.adapter.GameGridAdapter;
 import com.ruukaze.gamewiz.adapter.GameSearchAdapter;
 import com.ruukaze.gamewiz.apiService.ApiClient;
 import com.ruukaze.gamewiz.apiService.ApiService;
+import com.ruukaze.gamewiz.apiService.DataCallback;
 import com.ruukaze.gamewiz.databaseUtils.DataSource;
 import com.ruukaze.gamewiz.models.Game;
 
@@ -46,7 +47,7 @@ public class SearchActivity extends AppCompatActivity {
 
         toggle_back.setOnClickListener(v -> finish());
 
-        DataSource.getGamesByName(searchResults, "");
+        showSearchResults("");
         search_games.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -55,12 +56,26 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                DataSource.getGamesByName(searchResults,search_games.getText().toString());
+                showSearchResults(s.toString());
             }
 
             @Override
             public void afterTextChanged(Editable s) {
                 // Do nothing
+            }
+        });
+    }
+
+    private void showSearchResults(String querySearch) {
+        DataSource.getGamesByName(querySearch, new DataCallback() {
+            @Override
+            public void onSuccess(ArrayList<Game> games) {
+                searchResults.setAdapter(new GameSearchAdapter(games));
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
             }
         });
     }

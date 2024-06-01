@@ -3,6 +3,7 @@ package com.ruukaze.gamewiz.apiService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.ruukaze.gamewiz.models.Game;
+import com.ruukaze.gamewiz.models.InvolvedCompany;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;

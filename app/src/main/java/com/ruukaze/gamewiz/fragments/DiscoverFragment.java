@@ -25,6 +25,7 @@ import com.ruukaze.gamewiz.adapter.GameGridAdapter;
 import com.ruukaze.gamewiz.adapter.UserAdapter;
 import com.ruukaze.gamewiz.apiService.ApiClient;
 import com.ruukaze.gamewiz.apiService.ApiService;
+import com.ruukaze.gamewiz.apiService.DataCallback;
 import com.ruukaze.gamewiz.databaseUtils.DBDataSource;
 import com.ruukaze.gamewiz.databaseUtils.DataSource;
 import com.ruukaze.gamewiz.databaseUtils.DatabaseHelper;
@@ -85,11 +86,36 @@ public class DiscoverFragment extends Fragment {
         });
 
         // Eco-Friendly Games
-        DataSource.getEconestGames(eco_friendly_games_image, eco_friendly_games_title, eco_friendly_games_date);
+        DataSource.getEconestGames(new DataCallback() {
+            @Override
+            public void onSuccess(ArrayList<Game> games) {
+                Game game = games.get(0);
+                if (game.getCover() != null) {
+                    Picasso.get().load("https://images.igdb.com/igdb/image/upload/t_cover_big/" + game.getCover().getImage_id() + ".jpg").into(eco_friendly_games_image);
+                }
+                eco_friendly_games_title.setText(game.getName());
+                eco_friendly_games_date.setText(game.getRelease_dates().get(0).getHuman());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
 
         // Featured Games
         rv_featured_games.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        DataSource.getTopGames(rv_featured_games);
+        DataSource.getTopGames(new DataCallback() {
+            @Override
+            public void onSuccess(ArrayList<Game> games) {
+                rv_featured_games.setAdapter(new GameGridAdapter(games));
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
 
         // Featured Users
         rv_users.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
