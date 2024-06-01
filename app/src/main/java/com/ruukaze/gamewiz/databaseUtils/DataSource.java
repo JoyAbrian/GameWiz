@@ -2,7 +2,7 @@ package com.ruukaze.gamewiz.databaseUtils;
 
 import com.ruukaze.gamewiz.apiService.ApiClient;
 import com.ruukaze.gamewiz.apiService.ApiService;
-import com.ruukaze.gamewiz.apiService.DataCallback;
+import com.ruukaze.gamewiz.apiService.GameDataCallback;
 import com.ruukaze.gamewiz.models.Game;
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ public class DataSource {
     private static final Retrofit retrofit = ApiClient.getClient();
     private static final ApiService apiService = retrofit.create(ApiService.class);
 
-    public static void getGamesByName(String name, DataCallback callback) {
+    public static void getGamesByName(String name, GameDataCallback callback) {
         String fields = "id, name, cover.*;";
         int limit = 10;
 
@@ -39,7 +39,7 @@ public class DataSource {
         });
     }
 
-    public static void getEconestGames(DataCallback callback) {
+    public static void getEconestGames(GameDataCallback callback) {
         String bodyString = "fields id, name, screenshots.*, release_dates.*; where id = 204554;";
 
         RequestBody body = RequestBody.create(MediaType.parse("text/plain; charset=utf-8"), bodyString);
@@ -61,7 +61,7 @@ public class DataSource {
         });
     }
 
-    public static void getTopGames(DataCallback callback) {
+    public static void getTopGames(GameDataCallback callback) {
         String bodyString = "fields name, cover.*, release_dates.*;" +
                 " limit 10;" +
                 " where version_parent = null & platforms = (48, 167)" +
@@ -87,7 +87,7 @@ public class DataSource {
         });
     }
 
-    public static void getGamesDetails(int game_id, DataCallback callback) {
+    public static void getGamesDetails(int game_id, GameDataCallback callback) {
         String bodyString = "fields id, name, cover.*, screenshots.*, release_dates.*;" +
                 "limit 1;" +
                 "where id = " + game_id + ";";
@@ -111,7 +111,7 @@ public class DataSource {
         });
     }
 
-    public void getGamesSummary(int game_id, DataCallback callback) {
+    public void getGamesSummary(int game_id, GameDataCallback callback) {
         String bodyString = "fields id, summary;" +
                 "limit 1;" +
                 "where id = " + game_id + ";";
@@ -135,7 +135,7 @@ public class DataSource {
         });
     }
 
-    public static void getGamesScreenshot(int game_id, DataCallback callback) {
+    public static void getGamesScreenshot(int game_id, GameDataCallback callback) {
         String bodyString = "fields screenshots.*;" +
                 "limit 1;" +
                 "where id = " + game_id + ";";

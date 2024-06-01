@@ -6,6 +6,13 @@
     tools:context=".fragments.ScreenshotFragment"
     android:orientation="vertical">
 
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/loading_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/screenshot_loading"
+        android:visibility="gone"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/screenshots"
         android:layout_width="match_parent"

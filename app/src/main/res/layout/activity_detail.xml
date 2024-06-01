@@ -9,9 +9,17 @@
     android:padding="16dp"
     tools:context=".DetailActivity">
 
-    <FrameLayout
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/loading_screen"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/detail_activity_loading"
+        android:visibility="gone"/>
+
+    <FrameLayout
+        android:id="@+id/detail_screen"
+        android:layout_width="match_parent"
+        android:layout_height="340dp"
         android:paddingBottom="10dp">
 
         <androidx.cardview.widget.CardView

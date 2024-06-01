@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ruukaze.gamewiz.R;
-import com.ruukaze.gamewiz.apiService.DataCallback;
+import com.ruukaze.gamewiz.apiService.GameDataCallback;
 import com.ruukaze.gamewiz.databaseUtils.DataSource;
 import com.ruukaze.gamewiz.models.Game;
 
@@ -48,7 +48,7 @@ public class SummaryFragment extends Fragment {
         platforms_list = view.findViewById(R.id.platforms_list);
 
         DataSource dataSource = new DataSource();
-        dataSource.getGamesSummary(game_id, new DataCallback() {
+        dataSource.getGamesSummary(game_id, new GameDataCallback() {
             @Override
             public void onSuccess(ArrayList<Game> games) {
                 Game game = games.get(0);

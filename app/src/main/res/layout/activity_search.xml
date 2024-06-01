@@ -83,16 +83,31 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/loading_screen"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/search_loading"
+                android:scaleType="fitXY"
+                android:visibility="gone"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/searchResults"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:listitem="@layout/template_game_search"/>
+                tools:listitem="@layout/template_game_search"
+                android:visibility="gone"/>
 
-            <ProgressBar
-                android:id="@+id/progress_bar"
+            <TextView
+                android:id="@+id/no_results"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"
+                android:fontFamily="serif"
+                android:gravity="center"
+                android:text="No Results Found"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginTop="40dp"/>
 
         </LinearLayout>
 
