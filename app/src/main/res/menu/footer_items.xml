@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_discover"
+        android:title="Discover"
+        android:icon="@drawable/vector_home"/>
+
+    <item
+        android:id="@+id/action_community"
+        android:title="Community"
+        android:icon="@drawable/vector_community"/>
+
+    <item
+        android:id="@+id/action_games"
+        android:title="My Games"
+        android:icon="@drawable/vector_games"/>
+
+    <item
+        android:id="@+id/action_profile"
+        android:title="Profile"
+        android:icon="@drawable/vector_profile"/>
+
+</menu>

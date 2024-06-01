@@ -9,7 +9,11 @@ import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.ruukaze.gamewiz.adapter.FragmentAdapter;
 import com.ruukaze.gamewiz.databaseUtils.DatabaseHelper;
 import com.ruukaze.gamewiz.fragments.AccessDeniedFragment;
 import com.ruukaze.gamewiz.fragments.CommunityFragment;
@@ -19,8 +23,8 @@ import com.ruukaze.gamewiz.fragments.ProfileFragment;
 import com.ruukaze.gamewiz.models.User;
 
 public class MainActivity extends AppCompatActivity {
-    private ImageView home_img, community_img, games_img, profile_img; // FOOTER IMAGES
-    private LinearLayout toggle_home, toggle_community, toggle_games, toggle_profile; // FOOTER TOGGLE
+    private BottomNavigationView bottom_navigation;
+    private ViewPager2 parent_fragment;
 
     private DatabaseHelper dbHelper;
     private SharedPreferences sharedPreferences;
@@ -34,15 +38,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        home_img = findViewById(R.id.home_img);
-        community_img = findViewById(R.id.community_img);
-        games_img = findViewById(R.id.games_img);
-        profile_img = findViewById(R.id.profile_img);
-
-        toggle_home = findViewById(R.id.toggle_home);
-        toggle_community = findViewById(R.id.toggle_community);
-        toggle_games = findViewById(R.id.toggle_games);
-        toggle_profile = findViewById(R.id.toggle_profile);
+        bottom_navigation = findViewById(R.id.bottom_navigation);
+        parent_fragment = findViewById(R.id.parent_fragment);
 
         dbHelper = new DatabaseHelper(this);
         sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
@@ -54,70 +51,54 @@ public class MainActivity extends AppCompatActivity {
             user = loadUser();
         }
 
-        toggle_home.setOnClickListener(v -> inflateHomeFragment());
-        toggle_community.setOnClickListener(v -> inflateCommunityFragment());
-        toggle_games.setOnClickListener(v -> inflateGamesFragment());
-        toggle_profile.setOnClickListener(v -> inflateProfileFragment());
-
-        inflateHomeFragment();
-    }
-
-    private void inactiveFooter() {
-        home_img.setImageResource(R.drawable.vector_home);
-        community_img.setImageResource(R.drawable.vector_community);
-        games_img.setImageResource(R.drawable.vector_games);
-        profile_img.setImageResource(R.drawable.vector_profile);
-    }
-
-    private void setFragmentWithAnimation(Fragment fragment, boolean isLeft) {
-        int enterAnim = isLeft ? R.anim.slide_left_in : R.anim.slide_right_in;
-        int exitAnim = isLeft ? R.anim.slide_left_out : R.anim.slide_right_out;
-
-        getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(enterAnim, exitAnim)
-                .replace(R.id.parent_fragment, fragment)
-                .commit();
-    }
-
-    private void inflateHomeFragment() {
-        inactiveFooter();
-        home_img.setImageResource(R.drawable.vector_home_active);
-        setFragmentWithAnimation(new DiscoverFragment(), true);
-    }
-
-    private void inflateCommunityFragment() {
-        inactiveFooter();
-        community_img.setImageResource(R.drawable.vector_community_active);
+        FragmentAdapter fragmentAdapter = new FragmentAdapter(this);
+        fragmentAdapter.addFragment(new DiscoverFragment());
         if (isAuth) {
-            setFragmentWithAnimation(new CommunityFragment(user), true);
+            fragmentAdapter.addFragment(new CommunityFragment(user));
+            fragmentAdapter.addFragment(new GamesFragment(user));
+            fragmentAdapter.addFragment(new ProfileFragment(user));
         } else {
-            inflateAccessDeniedFragment();
+            fragmentAdapter.addFragment(new AccessDeniedFragment());
+            fragmentAdapter.addFragment(new AccessDeniedFragment());
+            fragmentAdapter.addFragment(new AccessDeniedFragment());
         }
-    }
+        parent_fragment.setAdapter(fragmentAdapter);
 
-    private void inflateGamesFragment() {
-        inactiveFooter();
-        games_img.setImageResource(R.drawable.vector_games_active);
-        if (isAuth) {
-            setFragmentWithAnimation(new GamesFragment(user), false);
-        } else {
-            inflateAccessDeniedFragment();
-        }
-    }
+        bottom_navigation.setOnNavigationItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_discover) {
+                parent_fragment.setCurrentItem(0);
+                return true;
+            } else if (itemId == R.id.action_community) {
+                parent_fragment.setCurrentItem(1);
+                return true;
+            } else if (itemId == R.id.action_games) {
+                parent_fragment.setCurrentItem(2);
+                return true;
+            } else if (itemId == R.id.action_profile) {
+                parent_fragment.setCurrentItem(3);
+                return true;
+            } else {
+                return false;
+            }
+        });
 
-    private void inflateProfileFragment() {
-        inactiveFooter();
-        profile_img.setImageResource(R.drawable.vector_profile_active);
-
-        if (isAuth) {
-            setFragmentWithAnimation(new ProfileFragment(user), false);
-        } else {
-            inflateAccessDeniedFragment();
-        }
-    }
-
-    private void inflateAccessDeniedFragment() {
-        setFragmentWithAnimation(new AccessDeniedFragment(), false);
+        // Link ViewPager2 swipe to BottomNavigationView with if-else
+        parent_fragment.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                if (position == 0) {
+                    bottom_navigation.setSelectedItemId(R.id.action_discover);
+                } else if (position == 1) {
+                    bottom_navigation.setSelectedItemId(R.id.action_community);
+                } else if (position == 2) {
+                    bottom_navigation.setSelectedItemId(R.id.action_games);
+                } else if (position == 3) {
+                    bottom_navigation.setSelectedItemId(R.id.action_profile);
+                }
+            }
+        });
     }
 
     public User loadUser() {
