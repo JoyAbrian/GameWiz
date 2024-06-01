@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.ruukaze.gamewiz.R;
 import com.ruukaze.gamewiz.databaseUtils.DataSource;
@@ -16,6 +17,8 @@ import com.ruukaze.gamewiz.models.Game;
 public class ScreenshotFragment extends Fragment {
     private static int game_id;
     private RecyclerView screenshots;
+    private TextView no_screenshots;
+
     public ScreenshotFragment(int game_id) {
         this.game_id = game_id;
     }
@@ -34,7 +37,8 @@ public class ScreenshotFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_screenshot, container, false);
 
         screenshots = view.findViewById(R.id.screenshots);
-        DataSource.getGamesScreenshot(game_id, screenshots);
+        no_screenshots = view.findViewById(R.id.no_screenshots);
+        DataSource.getGamesScreenshot(game_id, screenshots, no_screenshots);
 
         return view;
     }

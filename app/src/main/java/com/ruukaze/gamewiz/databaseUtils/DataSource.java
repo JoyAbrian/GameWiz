@@ -1,6 +1,7 @@
 package com.ruukaze.gamewiz.databaseUtils;
 
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +14,9 @@ import com.ruukaze.gamewiz.adapter.ScreenshotAdapter;
 import com.ruukaze.gamewiz.apiService.ApiClient;
 import com.ruukaze.gamewiz.apiService.ApiService;
 import com.ruukaze.gamewiz.models.Game;
+import com.ruukaze.gamewiz.models.Genre;
+import com.ruukaze.gamewiz.models.InvolvedCompany;
+import com.ruukaze.gamewiz.models.Platform;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -125,13 +129,19 @@ public class DataSource {
                     ArrayList<Game> games = response.body();
                     Game game = games.get(0);
 
-                    String banner_url = "https://images.igdb.com/igdb/image/upload/t_screenshot_huge/" + game.getScreenshots().get(0).getImage_id() + ".jpg";
-                    String cover_url = "https://images.igdb.com/igdb/image/upload/t_cover_big/" + game.getCover().getImage_id() + ".jpg";
+                    if (game.getCover() != null) {
+                        String banner_url = "https://images.igdb.com/igdb/image/upload/t_screenshot_huge/" + game.getScreenshots().get(0).getImage_id() + ".jpg";
+                        Picasso.get().load(banner_url).into(cover_banner);
+                    }
+                    if (game.getScreenshots() != null) {
+                        String cover_url = "https://images.igdb.com/igdb/image/upload/t_cover_big/" + game.getCover().getImage_id() + ".jpg";
+                        Picasso.get().load(cover_url).into(cover_image);
+                    }
 
-                    Picasso.get().load(banner_url).into(cover_banner);
-                    Picasso.get().load(cover_url).into(cover_image);
                     game_title.setText(game.getName());
-                    game_release.setText(game.getRelease_dates().get(0).getHuman());
+                    if (game.getRelease_dates() != null) {
+                        game_release.setText(game.getRelease_dates().get(0).getHuman());
+                    }
                 } else {
                     Log.e("DiscoverFragment", "Failed to fetch games: " + response.message());
                     // Handle error
@@ -146,7 +156,54 @@ public class DataSource {
         });
     }
 
-    public static void getGamesScreenshot(int game_id, RecyclerView screenshots) {
+    public static void getGamesSummary(int game_id, TextView summary_text, TextView developers_list, TextView publishers_list, TextView platforms_list) {
+        String bodyString = "fields id, summary;" +
+                "limit 1;" +
+                "where id = " + game_id + ";";
+
+        RequestBody body = RequestBody.create(MediaType.parse("text/plain; charset=utf-8"), bodyString);
+        Call<ArrayList<Game>> call = apiService.getTopGames(body);
+        call.enqueue(new Callback<ArrayList<Game>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Game>> call, Response<ArrayList<Game>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    ArrayList<Game> games = response.body();
+                    Game game = games.get(0);
+
+                    summary_text.setText(game.getSummary());
+//                    String developers = "";
+//                    String publishers = "";
+//                    for (InvolvedCompany involvedCompany: game.getInvolved_companies()) {
+//                        if (involvedCompany.isDeveloper()) {
+//                            developers += involvedCompany.getCompany().getName() + ", ";
+//                        }
+//                        if (involvedCompany.isPublisher()) {
+//                            publishers += involvedCompany.getCompany().getName() + ", ";
+//                        }
+//                    }
+//                    developers_list.setText(developers);
+//                    publishers_list.setText(publishers);
+//
+//                    String platforms = "";
+//                    for (Platform platform: game.getPlatforms()) {
+//                        platforms += platform.getName() + ", ";
+//                    }
+//                    platforms_list.setText(platforms);
+                } else {
+                    Log.e("DiscoverFragment", "Failed to fetch games: " + response.message());
+                    // Handle error
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Game>> call, Throwable t) {
+                Log.e("DiscoverFragment", "Error fetching games", t);
+                // Handle error
+            }
+        });
+    }
+
+    public static void getGamesScreenshot(int game_id, RecyclerView screenshots, TextView no_screenshots) {
         String bodyString = "fields screenshots.*;" +
                 "limit 1;" +
                 "where id = " + game_id + ";";
@@ -160,8 +217,13 @@ public class DataSource {
                     ArrayList<Game> games = response.body();
                     Game game = games.get(0);
 
-                    screenshots.setLayoutManager(new GridLayoutManager(screenshots.getContext(), 2));
-                    screenshots.setAdapter(new ScreenshotAdapter(game.getScreenshots()));
+                    if (game.getScreenshots() != null) {
+                        screenshots.setLayoutManager(new GridLayoutManager(screenshots.getContext(), 2));
+                        screenshots.setAdapter(new ScreenshotAdapter(game.getScreenshots()));
+                    } else {
+                        screenshots.setVisibility(View.GONE);
+                        no_screenshots.setVisibility(View.VISIBLE);
+                    }
                 } else {
                     Log.e("DiscoverFragment", "Failed to fetch games: " + response.message());
                     // Handle error
