@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
             fragmentAdapter.addFragment(new AccessDeniedFragment());
         }
         parent_fragment.setAdapter(fragmentAdapter);
+        parent_fragment.setUserInputEnabled(false);
 
         bottom_navigation.setOnNavigationItemSelectedListener(item -> {
             int itemId = item.getItemId();
