@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 public class ScreenshotFragment extends Fragment {
     private static int game_id;
-    private RecyclerView screenshots;
     private TextView no_screenshots;
 
     public ScreenshotFragment(int game_id) {
@@ -41,21 +40,16 @@ public class ScreenshotFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_screenshot, container, false);
 
-        screenshots = view.findViewById(R.id.screenshots);
+        RecyclerView screenshots = view.findViewById(R.id.screenshots);
         no_screenshots = view.findViewById(R.id.no_screenshots);
         DataSource.getGamesScreenshot(game_id, new GameDataCallback() {
             @Override
             public void onSuccess(ArrayList<Game> games) {
-                if (!games.isEmpty()) {
+                try {
                     Game game = games.get(0);
-                    if (game.getScreenshots() != null) {
-                        screenshots.setLayoutManager(new GridLayoutManager(getContext(), 2));
-                        screenshots.setAdapter(new ScreenshotAdapter(game.getScreenshots()));
-                    } else {
-                        no_screenshots.setVisibility(View.VISIBLE);
-                        screenshots.setVisibility(View.GONE);
-                    }
-                } else {
+                    screenshots.setLayoutManager(new GridLayoutManager(getContext(), 2));
+                    screenshots.setAdapter(new ScreenshotAdapter(game.getScreenshots()));
+                } catch (Exception e) {
                     no_screenshots.setVisibility(View.VISIBLE);
                     screenshots.setVisibility(View.GONE);
                 }

@@ -12,8 +12,8 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface ApiService {
-    @GET("games")
-    Call<ArrayList<Game>> searchByNameGamesSimilarity(@Query("fields") String fields, @Query("search") String name, @Query("limit") int limit);
+    @POST("games")
+    Call<ArrayList<Game>> searchByNameGamesSimilarity(@Body RequestBody body);
 
     @POST("games")
     Call<ArrayList<Game>> getTopGames(@Body RequestBody body);

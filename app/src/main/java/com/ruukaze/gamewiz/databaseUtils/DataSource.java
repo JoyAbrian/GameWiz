@@ -18,10 +18,13 @@ public class DataSource {
     private static final ApiService apiService = retrofit.create(ApiService.class);
 
     public static void getGamesByName(String name, GameDataCallback callback) {
-        String fields = "id, name, cover.*;";
-        int limit = 10;
+        String bodyString = "search \"" + name + "\";" +
+                "fields id, name, cover.*;" +
+                "where version_parent = null & rating != null & cover != null & screenshots != null & release_dates != null;" +
+                "limit 10;";
 
-        Call<ArrayList<Game>> call = apiService.searchByNameGamesSimilarity(fields, name, limit);
+        RequestBody body = RequestBody.create(MediaType.parse("text/plain; charset=utf-8"), bodyString);
+        Call<ArrayList<Game>> call = apiService.searchByNameGamesSimilarity(body);
         call.enqueue(new Callback<ArrayList<Game>>() {
             @Override
             public void onResponse(Call<ArrayList<Game>> call, Response<ArrayList<Game>> response) {
