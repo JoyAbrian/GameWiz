@@ -1,5 +1,6 @@
 package com.ruukaze.gamewiz;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -16,14 +17,17 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.ruukaze.gamewiz.adapter.FragmentAdapter;
 import com.ruukaze.gamewiz.apiService.GameDataCallback;
 import com.ruukaze.gamewiz.databaseUtils.DataSource;
+import com.ruukaze.gamewiz.databaseUtils.DatabaseHelper;
 import com.ruukaze.gamewiz.fragments.ScreenshotFragment;
 import com.ruukaze.gamewiz.fragments.SummaryFragment;
 import com.ruukaze.gamewiz.models.Game;
+import com.ruukaze.gamewiz.models.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -87,6 +91,15 @@ public class DetailActivity extends AppCompatActivity {
                         game_release.setText(game.getRelease_dates().get(0).getHuman());
                     }
 
+                    SharedPreferences sharedPreferences = getSharedPreferences("user", MODE_PRIVATE);
+                    int user_id = sharedPreferences.getInt("user_id", 0);
+                    boolean isAuth = sharedPreferences.getBoolean("isAuth", false);
+
+                    if (!isAuth) {
+                        add_to.setVisibility(View.GONE);
+                    } else {
+                        add_to.setVisibility(View.VISIBLE);
+                    }
                     add_to.setOnClickListener(v -> {
                         View popupView = LayoutInflater.from(DetailActivity.this).inflate(R.layout.scene_add_to, null);
 
@@ -95,6 +108,40 @@ public class DetailActivity extends AppCompatActivity {
                                 ViewGroup.LayoutParams.MATCH_PARENT,
                                 ViewGroup.LayoutParams.MATCH_PARENT
                         );
+
+                        DatabaseHelper databaseHelper = new DatabaseHelper(DetailActivity.this);
+                        CardView library_card = popupView.findViewById(R.id.library_card);
+                        CardView wishlist_card = popupView.findViewById(R.id.wishlist_card);
+                        CardView playing_card = popupView.findViewById(R.id.playing_card);
+                        CardView pause_card = popupView.findViewById(R.id.pause_card);
+                        CardView completed_card = popupView.findViewById(R.id.completed_card);
+
+                        library_card.setOnClickListener(v1 -> {
+                            databaseHelper.insertLibrary(user_id, game_id, "library");
+                            popupWindow.dismiss();
+                        });
+
+                        wishlist_card.setOnClickListener(v1 -> {
+                            databaseHelper.insertLibrary(user_id, game_id, "wishlist");
+                            popupWindow.dismiss();
+                        });
+
+                        playing_card.setOnClickListener(v1 -> {
+                            databaseHelper.insertLibrary(user_id, game_id, "playing");
+                            popupWindow.dismiss();
+                        });
+
+                        pause_card.setOnClickListener(v1 -> {
+                            databaseHelper.insertLibrary(user_id, game_id, "pause");
+                            popupWindow.dismiss();
+                        });
+
+                        completed_card.setOnClickListener(v1 -> {
+                            databaseHelper.insertLibrary(user_id, game_id, "completed");
+                            popupWindow.dismiss();
+                        });
+
+                        databaseHelper.close();
 
                         TextView scene_title = popupView.findViewById(R.id.game_title);
                         scene_title.setText(game.getName());
