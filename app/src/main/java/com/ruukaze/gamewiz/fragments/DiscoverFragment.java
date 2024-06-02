@@ -32,6 +32,7 @@ import com.ruukaze.gamewiz.models.Game;
 import com.ruukaze.gamewiz.models.User;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -43,9 +44,9 @@ public class DiscoverFragment extends Fragment {
     private NestedScrollView nested_scroll_view;
     private GifImageView loading_screen;
     private ImageView toggle_search;
-    private ImageView eco_friendly_games_image;
-    private TextView eco_friendly_games_title;
-    private TextView eco_friendly_games_date;
+//    private ImageView eco_friendly_games_image;
+//    private TextView eco_friendly_games_title;
+//    private TextView eco_friendly_games_date;
     private RecyclerView rv_featured_games;
     private RecyclerView rv_users;
     private RecyclerView rv_communities;
@@ -71,9 +72,9 @@ public class DiscoverFragment extends Fragment {
 
         nested_scroll_view = view.findViewById(R.id.nested_scroll_view);
         loading_screen = view.findViewById(R.id.loading_screen);
-        eco_friendly_games_image = view.findViewById(R.id.eco_friendly_games_image);
-        eco_friendly_games_title = view.findViewById(R.id.eco_friendly_games_title);
-        eco_friendly_games_date = view.findViewById(R.id.eco_friendly_games_date);
+//        eco_friendly_games_image = view.findViewById(R.id.eco_friendly_games_image);
+//        eco_friendly_games_title = view.findViewById(R.id.eco_friendly_games_title);
+//        eco_friendly_games_date = view.findViewById(R.id.eco_friendly_games_date);
         rv_featured_games = view.findViewById(R.id.rv_featured_games);
         rv_users = view.findViewById(R.id.rv_users);
         rv_communities = view.findViewById(R.id.rv_communities);
@@ -90,30 +91,30 @@ public class DiscoverFragment extends Fragment {
         nested_scroll_view.setVisibility(View.GONE);
         loading_screen.setVisibility(View.VISIBLE);
         executor.execute(() -> {
-            // Eco-Friendly Games
-            DataSource.getEconestGames(new GameDataCallback() {
-                @Override
-                public void onSuccess(ArrayList<Game> games) {
-                    Game game = games.get(0);
-                    if (game.getCover() != null) {
-                        Picasso.get().load("https://images.igdb.com/igdb/image/upload/t_cover_big/" + game.getCover().getImage_id() + ".jpg").into(eco_friendly_games_image);
-                    }
-                    eco_friendly_games_title.setText(game.getName());
-                    eco_friendly_games_date.setText(game.getRelease_dates().get(0).getHuman());
-                }
-
-                @Override
-                public void onFailure(Throwable t) {
-
-                }
-            });
+//            // Eco-Friendly Games
+//            DataSource.getEconestGames(new GameDataCallback() {
+//                @Override
+//                public void onSuccess(ArrayList<Game> games) {
+//                    Game game = games.get(0);
+//                    if (game.getCover() != null) {
+//                        Picasso.get().load("https://images.igdb.com/igdb/image/upload/t_cover_big/" + game.getCover().getImage_id() + ".jpg").into(eco_friendly_games_image);
+//                    }
+//                    eco_friendly_games_title.setText(game.getName());
+//                    eco_friendly_games_date.setText(game.getRelease_dates().get(0).getHuman());
+//                }
+//
+//                @Override
+//                public void onFailure(Throwable t) {
+//
+//                }
+//            });
 
             // Featured Games
-            rv_featured_games.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+            ArrayList<Game> featuredGames = new ArrayList<>();
             DataSource.getTopGames(new GameDataCallback() {
                 @Override
                 public void onSuccess(ArrayList<Game> games) {
-                    rv_featured_games.setAdapter(new GameGridAdapter(games));
+                    featuredGames.addAll(games);
                 }
 
                 @Override
@@ -122,13 +123,6 @@ public class DiscoverFragment extends Fragment {
                 }
             });
 
-            // Featured Users
-            rv_users.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-            rv_users.setAdapter(new UserAdapter(getUsers()));
-
-            // Featured Communities
-            rv_communities.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-            rv_communities.setAdapter(new CommunityDiscoverAdapter(user,getCommunities(), getContext()));
 
             try {
                 Thread.sleep(3000);
@@ -136,6 +130,17 @@ public class DiscoverFragment extends Fragment {
                 throw new RuntimeException(e);
             }
             handler.post(() -> {
+
+                rv_featured_games.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+                rv_featured_games.setAdapter(new GameGridAdapter(featuredGames));
+                // Featured Users
+                rv_users.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+                rv_users.setAdapter(new UserAdapter(getUsers()));
+
+                // Featured Communities
+                rv_communities.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+                rv_communities.setAdapter(new CommunityDiscoverAdapter(user,getCommunities(), getContext()));
+
                 loading_screen.setVisibility(View.GONE);
                 nested_scroll_view.setVisibility(View.VISIBLE);
             });
