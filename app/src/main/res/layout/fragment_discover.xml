@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <!--    TOOLBAR SECTION -->
-    <Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="4dp">
@@ -29,7 +29,7 @@
             android:layout_gravity="end"
             android:layout_marginEnd="20dp"/>
 
-    </Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/loading_screen"

@@ -133,4 +133,63 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void insertLibrary(int user_id, int game_id, String type) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("user_id", user_id);
+        values.put("game_id", game_id);
+        values.put("type", type);
+        db.insert(TABLE_LIBRARY, null, values);
+        db.close();
+    }
+
+    public void insertCommunity(String name, String description, int icon, int leader_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("name", name);
+        values.put("description", description);
+        values.put("icon", icon);
+        values.put("leader_id", leader_id);
+        db.insert(TABLE_COMMUNITIES, null, values);
+        db.close();
+    }
+
+    public void insertPost(int community_id, int user_id, String post, String image) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("community_id", community_id);
+        values.put("user_id", user_id);
+        values.put("post", post);
+        values.put("image", image);
+        db.insert(TABLE_POSTS, null, values);
+        db.close();
+    }
+
+    public void joinCommunity(int user_id, int community_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("community_id", community_id);
+        db.update(TABLE_USERS, values, "id = ?", new String[]{String.valueOf(user_id)});
+        db.close();
+    }
+
+    public void leaveCommunity(int user_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("community_id", 0);
+        db.update(TABLE_USERS, values, "id = ?", new String[]{String.valueOf(user_id)});
+        db.close();
+    }
+
+    public void editProfile(int user_id, String username, int avatar, String fullname, String email, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("username", username);
+        values.put("fullname", fullname);
+        values.put("avatar", avatar);
+        values.put("email", email);
+        values.put("password", password);
+        db.update(TABLE_USERS, values, "id = ?", new String[]{String.valueOf(user_id)});
+        db.close();
+    }
 }

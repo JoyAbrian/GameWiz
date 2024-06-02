@@ -1,6 +1,7 @@
 package com.ruukaze.gamewiz.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -16,17 +17,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.ruukaze.gamewiz.MainActivity;
 import com.ruukaze.gamewiz.R;
 import com.ruukaze.gamewiz.databaseUtils.DatabaseHelper;
 import com.ruukaze.gamewiz.models.Community;
+import com.ruukaze.gamewiz.models.User;
 
 import java.util.ArrayList;
 
-public class CommunityDiscoverAdapter extends RecyclerView.Adapter<CommunityDiscoverAdapter.ViewHolder>{
+public class CommunityDiscoverAdapter extends RecyclerView.Adapter<CommunityDiscoverAdapter.ViewHolder> {
     private ArrayList<Community> communities;
     private Context context;
+    private User user;
 
-    public CommunityDiscoverAdapter(ArrayList<Community> communities, Context context) {
+    public CommunityDiscoverAdapter(User user, ArrayList<Community> communities, Context context) {
+        this.user = user;
         this.communities = communities;
         this.context = context;
     }
@@ -49,10 +54,12 @@ public class CommunityDiscoverAdapter extends RecyclerView.Adapter<CommunityDisc
         Cursor cursor = db.getReadableDatabase().rawQuery("SELECT COUNT(*) FROM users WHERE community_id = " + community.getId(), null);
         cursor.moveToFirst();
         holder.community_size.setText(cursor.getString(0) + " members");
+        cursor.close();
 
         cursor = db.getReadableDatabase().rawQuery("SELECT COUNT(*) FROM posts WHERE community_id = " + community.getId(), null);
         cursor.moveToFirst();
         holder.community_posts.setText(cursor.getString(0) + " posts");
+        cursor.close();
 
         holder.itemView.setOnClickListener(v -> {
             View popupView = LayoutInflater.from(v.getContext()).inflate(R.layout.scene_community, null);
@@ -75,17 +82,23 @@ public class CommunityDiscoverAdapter extends RecyclerView.Adapter<CommunityDisc
             popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
 
-//            Button join_community = popupView.findViewById(R.id.join_community);
-//            join_community.setOnClickListener(v1 -> {
-//                db.getWritableDatabase().execSQL("INSERT INTO users (community_id, user_id) VALUES (" + community.getId() + ", 1)");
-//                join_community.setText("Joined");
-//                join_community.setEnabled(false);
-//            });
+            Button join_community = popupView.findViewById(R.id.join_community);
+            if (user != null) {
+                join_community.setOnClickListener(v1 -> {
+                    DatabaseHelper dbHelper = new DatabaseHelper(context);
+                    dbHelper.joinCommunity(user.getId(), community.getId());
+                    popupWindow.dismiss();
+                    Intent intent = new Intent(context, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                });
+            } else {
+                join_community.setVisibility(View.GONE);
+            }
 
             ImageView close_scene = popupView.findViewById(R.id.close_scene);
             close_scene.setOnClickListener(v1 -> popupWindow.dismiss());
         });
-        cursor.close();
     }
 
     @Override

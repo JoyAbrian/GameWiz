@@ -29,6 +29,7 @@ import com.ruukaze.gamewiz.databaseUtils.DBDataSource;
 import com.ruukaze.gamewiz.databaseUtils.DataSource;
 import com.ruukaze.gamewiz.databaseUtils.DatabaseHelper;
 import com.ruukaze.gamewiz.models.Game;
+import com.ruukaze.gamewiz.models.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ import java.util.concurrent.Executors;
 import pl.droidsonroids.gif.GifImageView;
 
 public class DiscoverFragment extends Fragment {
+    private static User user;
     private NestedScrollView nested_scroll_view;
     private GifImageView loading_screen;
     private ImageView toggle_search;
@@ -50,12 +52,12 @@ public class DiscoverFragment extends Fragment {
     private Executor executor = Executors.newSingleThreadExecutor();
     private Handler handler = new Handler(Looper.myLooper());
 
-    public DiscoverFragment() {
-        // Required empty public constructor
+    public DiscoverFragment(User user) {
+        this.user = user;
     }
 
     public static DiscoverFragment newInstance() {
-        return new DiscoverFragment();
+        return new DiscoverFragment(user);
     }
 
     @Override
@@ -126,7 +128,7 @@ public class DiscoverFragment extends Fragment {
 
             // Featured Communities
             rv_communities.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-            rv_communities.setAdapter(new CommunityDiscoverAdapter(getCommunities(), getContext()));
+            rv_communities.setAdapter(new CommunityDiscoverAdapter(user,getCommunities(), getContext()));
 
             try {
                 Thread.sleep(3000);

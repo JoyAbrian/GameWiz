@@ -13,11 +13,13 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ruukaze.gamewiz.MainActivity;
 import com.ruukaze.gamewiz.R;
@@ -82,8 +84,28 @@ public class ProfileFragment extends Fragment {
                     ViewGroup.LayoutParams.MATCH_PARENT
             );
 
+            popupWindow.setFocusable(true);
+            popupWindow.setOutsideTouchable(true);
+            popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+            popupWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
             ViewPager2 avatar_view_pager = popupView.findViewById(R.id.avatar_view_pager);
-            int[] images = {R.drawable.avatar_1, R.drawable.avatar_2, R.drawable.avatar_3, R.drawable.avatar_4, R.drawable.avatar_5, R.drawable.avatar_6, R.drawable.avatar_7, R.drawable.avatar_8, R.drawable.avatar_9, R.drawable.avatar_10, R.drawable.avatar_11, R.drawable.avatar_12, R.drawable.avatar_13, R.drawable.avatar_14, R.drawable.avatar_15, R.drawable.avatar_16, R.drawable.avatar_17, R.drawable.avatar_18, R.drawable.avatar_19, R.drawable.avatar_20, R.drawable.avatar_21, R.drawable.avatar_22, R.drawable.avatar_23, R.drawable.avatar_24, R.drawable.avatar_25, R.drawable.avatar_26, R.drawable.avatar_27, R.drawable.avatar_28, R.drawable.avatar_29, R.drawable.avatar_30, R.drawable.avatar_31, R.drawable.avatar_32, R.drawable.avatar_33, R.drawable.avatar_34, R.drawable.avatar_35, R.drawable.avatar_36, R.drawable.avatar_37, R.drawable.avatar_38, R.drawable.avatar_39, R.drawable.avatar_40, R.drawable.avatar_41, R.drawable.avatar_42, R.drawable.avatar_43, R.drawable.avatar_44, R.drawable.avatar_45, R.drawable.avatar_46, R.drawable.avatar_47, R.drawable.avatar_48, R.drawable.avatar_49, R.drawable.avatar_50};
+            int[] images = {
+                    R.drawable.avatar_1, R.drawable.avatar_2, R.drawable.avatar_3, R.drawable.avatar_4,
+                    R.drawable.avatar_5, R.drawable.avatar_6, R.drawable.avatar_7, R.drawable.avatar_8,
+                    R.drawable.avatar_9, R.drawable.avatar_10, R.drawable.avatar_11, R.drawable.avatar_12,
+                    R.drawable.avatar_13, R.drawable.avatar_14, R.drawable.avatar_15, R.drawable.avatar_16,
+                    R.drawable.avatar_17, R.drawable.avatar_18, R.drawable.avatar_19, R.drawable.avatar_20,
+                    R.drawable.avatar_21, R.drawable.avatar_22, R.drawable.avatar_23, R.drawable.avatar_24,
+                    R.drawable.avatar_25, R.drawable.avatar_26, R.drawable.avatar_27, R.drawable.avatar_28,
+                    R.drawable.avatar_29, R.drawable.avatar_30, R.drawable.avatar_31, R.drawable.avatar_32,
+                    R.drawable.avatar_33, R.drawable.avatar_34, R.drawable.avatar_35, R.drawable.avatar_36,
+                    R.drawable.avatar_37, R.drawable.avatar_38, R.drawable.avatar_39, R.drawable.avatar_40,
+                    R.drawable.avatar_41, R.drawable.avatar_42, R.drawable.avatar_43, R.drawable.avatar_44,
+                    R.drawable.avatar_45, R.drawable.avatar_46, R.drawable.avatar_47, R.drawable.avatar_48,
+                    R.drawable.avatar_49, R.drawable.avatar_50
+            };
             avatar_view_pager.setAdapter(new AvatarAdapter(v.getContext(), images));
 
             EditText scene_profile_username = popupView.findViewById(R.id.profile_username);
@@ -98,7 +120,35 @@ public class ProfileFragment extends Fragment {
             EditText scene_profile_password = popupView.findViewById(R.id.profile_password);
             scene_profile_password.setText(user.getPassword());
 
-            popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            Button save_profile = popupView.findViewById(R.id.save_profile);
+            save_profile.setOnClickListener(v1 -> {
+                int avatar = images[avatar_view_pager.getCurrentItem()];
+                String username = scene_profile_username.getText().toString();
+                String fullname = scene_profile_full_name.getText().toString();
+                String email = scene_profile_email.getText().toString();
+                String password = scene_profile_password.getText().toString();
+                dbHelper = new DatabaseHelper(v.getContext());
+
+                Cursor cursor = dbHelper.getReadableDatabase().rawQuery(
+                        "SELECT * FROM users WHERE email = ? AND id != ?", new String[]{email, String.valueOf(user.getId())});
+                if (cursor.getCount() > 0) {
+                    scene_profile_email.setError("Email already exists");
+                    Toast.makeText(v.getContext(), "Email already exists", Toast.LENGTH_SHORT).show();
+                } else {
+                    cursor = dbHelper.getReadableDatabase().rawQuery(
+                            "SELECT * FROM users WHERE username = ? AND id != ?", new String[]{username, String.valueOf(user.getId())});
+                    if (cursor.getCount() > 0) {
+                        scene_profile_username.setError("Username already exists");
+                        Toast.makeText(v.getContext(), "Username already exists", Toast.LENGTH_SHORT).show();
+                    } else {
+                        dbHelper.editProfile(user.getId(), username, avatar, fullname, email, password);
+                        popupWindow.dismiss();
+                        Toast.makeText(v.getContext(), "Profile updated", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                cursor.close();
+            });
+
             popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
 
             ImageView close_scene = popupView.findViewById(R.id.close_scene);

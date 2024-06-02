@@ -52,7 +52,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         FragmentAdapter fragmentAdapter = new FragmentAdapter(this);
-        fragmentAdapter.addFragment(new DiscoverFragment());
+        if (isAuth) {
+            fragmentAdapter.addFragment(new DiscoverFragment(user));
+        } else {
+            fragmentAdapter.addFragment(new DiscoverFragment(null));
+        }
         if (isAuth) {
             fragmentAdapter.addFragment(new CommunityFragment(user));
             fragmentAdapter.addFragment(new GamesFragment(user));
