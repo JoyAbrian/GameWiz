@@ -9,9 +9,9 @@
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:elevation="10dp"
-        app:cardCornerRadius="20dp"
-        android:layout_margin="20dp">
+        app:cardCornerRadius="15dp">
 
         <ImageView
             android:id="@+id/close_scene"
@@ -29,17 +29,17 @@
             android:layout_margin="20dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/user_avatar"
+                android:id="@+id/community_banner"
                 android:layout_width="220dp"
                 android:layout_height="220dp"
-                android:src="@drawable/avatar_1"/>
+                android:src="@drawable/banner_1"/>
 
             <TextView
-                android:id="@+id/user_name"
+                android:id="@+id/community_name"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-black"
-                android:text="User Name"
+                android:text="Community Name"
                 android:textAlignment="center"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -47,12 +47,19 @@
                 android:layout_marginTop="10dp"/>
 
             <TextView
-                android:id="@+id/user_full_name"
+                android:id="@+id/community_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-light"
+                android:text="Community Desc"
+                android:textAlignment="center"/>
+
+            <Button
+                android:id="@+id/join_community"
+                android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:fontFamily="sans-serif-light"
-                android:text="User Full Name"
-                android:textAlignment="center"/>
+                android:text="Join"/>
 
         </LinearLayout>
 

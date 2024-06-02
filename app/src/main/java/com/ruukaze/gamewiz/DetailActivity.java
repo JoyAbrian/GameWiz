@@ -1,11 +1,18 @@
 package com.ruukaze.gamewiz;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +39,7 @@ public class DetailActivity extends AppCompatActivity {
     private ImageView toggle_back;
     private ImageView cover_banner;
     private ImageView cover_image;
+    private Button add_to;
     private TextView game_title;
     private TextView game_release;
     private int game_id;
@@ -52,6 +60,7 @@ public class DetailActivity extends AppCompatActivity {
         game_release = findViewById(R.id.game_release);
         loading_screen = findViewById(R.id.loading_screen);
         detail_screen = findViewById(R.id.detail_screen);
+        add_to = findViewById(R.id.add_to);
 
         toggle_back.setOnClickListener(v -> finish());
 
@@ -77,6 +86,24 @@ public class DetailActivity extends AppCompatActivity {
                     if (game.getRelease_dates() != null) {
                         game_release.setText(game.getRelease_dates().get(0).getHuman());
                     }
+
+                    add_to.setOnClickListener(v -> {
+                        View popupView = LayoutInflater.from(DetailActivity.this).inflate(R.layout.scene_add_to, null);
+
+                        PopupWindow popupWindow = new PopupWindow(
+                                popupView,
+                                ViewGroup.LayoutParams.MATCH_PARENT,
+                                ViewGroup.LayoutParams.MATCH_PARENT
+                        );
+
+                        TextView scene_title = popupView.findViewById(R.id.game_title);
+                        scene_title.setText(game.getName());
+
+                        ImageView close_scene = popupView.findViewById(R.id.close_scene);
+                        close_scene.setOnClickListener(v1 -> popupWindow.dismiss());
+
+                        popupWindow.showAtLocation(detail_screen, Gravity.CENTER, 0, 0);
+                    });
                 }
 
                 @Override
