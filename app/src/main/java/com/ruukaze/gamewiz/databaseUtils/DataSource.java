@@ -93,14 +93,14 @@ public class DataSource {
                 "where id = " + game_id + ";";
 
         RequestBody body = RequestBody.create(MediaType.parse("text/plain; charset=utf-8"), bodyString);
-        Call<ArrayList<Game>> call = apiService.getTopGames(body);
+        Call<ArrayList<Game>> call = apiService.getGameDetails(body);
         call.enqueue(new Callback<ArrayList<Game>>() {
             @Override
             public void onResponse(Call<ArrayList<Game>> call, Response<ArrayList<Game>> response) {
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                     callback.onSuccess(response.body());
                 } else {
-                    callback.onFailure(new Exception("Failed to fetch games: " + response.message()));
+                    callback.onFailure(new Exception("Failed to fetch game details: " + response.message()));
                 }
             }
 
@@ -117,14 +117,14 @@ public class DataSource {
                 "where id = " + game_id + ";";
 
         RequestBody body = RequestBody.create(MediaType.parse("text/plain; charset=utf-8"), bodyString);
-        Call<ArrayList<Game>> call = apiService.getTopGames(body);
+        Call<ArrayList<Game>> call = apiService.getGameSummary(body);
         call.enqueue(new Callback<ArrayList<Game>>() {
             @Override
             public void onResponse(Call<ArrayList<Game>> call, Response<ArrayList<Game>> response) {
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                     callback.onSuccess(response.body());
                 } else {
-                    callback.onFailure(new Exception("Failed to fetch games: " + response.message()));
+                    callback.onFailure(new Exception("Failed to fetch game summary: " + response.message()));
                 }
             }
 
@@ -141,14 +141,14 @@ public class DataSource {
                 "where id = " + game_id + ";";
 
         RequestBody body = RequestBody.create(MediaType.parse("text/plain; charset=utf-8"), bodyString);
-        Call<ArrayList<Game>> call = apiService.getTopGames(body);
+        Call<ArrayList<Game>> call = apiService.getGameScreenshots(body);
         call.enqueue(new Callback<ArrayList<Game>>() {
             @Override
             public void onResponse(Call<ArrayList<Game>> call, Response<ArrayList<Game>> response) {
-                if (response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
                     callback.onSuccess(response.body());
                 } else {
-                    callback.onFailure(new Exception("Failed to fetch games: " + response.message()));
+                    callback.onFailure(new Exception("Failed to fetch game screenshots: " + response.message()));
                 }
             }
 

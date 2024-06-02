@@ -17,4 +17,13 @@ public interface ApiService {
 
     @POST("games")
     Call<ArrayList<Game>> getTopGames(@Body RequestBody body);
+
+    @POST("games")
+    Call<ArrayList<Game>> getGameDetails(@Body RequestBody body);
+
+    @POST("games")
+    Call<ArrayList<Game>> getGameSummary(@Body RequestBody body);
+
+    @POST("games")
+    Call<ArrayList<Game>> getGameScreenshots(@Body RequestBody body);
 }
