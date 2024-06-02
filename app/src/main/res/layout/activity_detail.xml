@@ -102,16 +102,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginEnd="8dp"
-            android:backgroundTint="#C6C6C6"
-            android:text="Rate Game"
-            android:textColor="@color/black"
-            android:textAllCaps="false" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginStart="8dp"
             android:backgroundTint="#C6C6C6"
             android:text="Add To"
