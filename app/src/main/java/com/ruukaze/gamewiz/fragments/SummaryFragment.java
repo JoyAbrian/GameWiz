@@ -47,23 +47,25 @@ public class SummaryFragment extends Fragment {
         genres_list = view.findViewById(R.id.genres_list);
         platforms_list = view.findViewById(R.id.platforms_list);
 
-        DataSource dataSource = new DataSource();
-        dataSource.getGamesSummary(game_id, new GameDataCallback() {
-            @Override
-            public void onSuccess(ArrayList<Game> games) {
-                Game game = games.get(0);
-                summary_text.setText(game.getSummary());
+//        DataSource dataSource = new DataSource();
+//        dataSource.getGamesSummary(game_id, new GameDataCallback() {
+//            @Override
+//            public void onSuccess(ArrayList<Game> games) {
+//                Game game = games.get(0);
+//                if (game.getSummary() != null) {
+//                    summary_text.setText(game.getSummary());
+//                }
 //                developers_list.setText(game.getDevelopers().toString());
 //                publishers_list.setText(game.getPublishers().toString());
 //                genres_list.setText(game.getGenres().toString());
 //                platforms_list.setText(game.getPlatforms().toString());
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-        });
+//            }
+//
+//            @Override
+//            public void onFailure(Throwable t) {
+//
+//            }
+//        });
 
         return view;
     }

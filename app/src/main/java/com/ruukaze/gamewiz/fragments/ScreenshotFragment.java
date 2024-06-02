@@ -54,17 +54,19 @@ public class ScreenshotFragment extends Fragment {
         screenshots = view.findViewById(R.id.screenshots);
         no_screenshots = view.findViewById(R.id.no_screenshots);
 
+        loading_screen.setVisibility(View.VISIBLE);
+        screenshots.setVisibility(View.GONE);
+        no_screenshots.setVisibility(View.GONE);
         executor.execute(() -> {
             DataSource.getGamesScreenshot(game_id, new GameDataCallback() {
                 @Override
                 public void onSuccess(ArrayList<Game> games) {
-                    Game game = games.get(0);
-                    if (game.getScreenshots() != null) {
-                        screenshots.setLayoutManager(new GridLayoutManager(getContext(), 2));
-                        screenshots.setAdapter(new ScreenshotAdapter(game.getScreenshots()));
-                    } else {
-                        no_screenshots.setVisibility(View.VISIBLE);
-                        screenshots.setVisibility(View.GONE);
+                    if (!games.isEmpty()) {
+                        Game game = games.get(0);
+                        if (game.getScreenshots() != null) {
+                            screenshots.setLayoutManager(new GridLayoutManager(getContext(), 2));
+                            screenshots.setAdapter(new ScreenshotAdapter(game.getScreenshots()));
+                        }
                     }
                 }
 
@@ -80,7 +82,13 @@ public class ScreenshotFragment extends Fragment {
             }
             handler.post(() -> {
                 loading_screen.setVisibility(View.GONE);
-                screenshots.setVisibility(View.VISIBLE);
+                if (screenshots.getAdapter() == null)
+                    no_screenshots.setVisibility(View.VISIBLE);
+                else if (screenshots.getAdapter().getItemCount() == 0)
+                    no_screenshots.setVisibility(View.VISIBLE);
+                else if (screenshots.getAdapter().getItemCount() > 0) {
+                    screenshots.setVisibility(View.VISIBLE);
+                }
             });
         });
 
