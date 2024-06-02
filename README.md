@@ -1,4 +1,6 @@
-<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/app_logo.png">
+<div align="center">
+    <img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/app_logo.png">
+</div>
 Selamat datang di GameWiz, pendamping utama Anda untuk menemukan dan menjelajahi video game. Didukung oleh API IGDB, GameWiz memberikan Anda informasi detail tentang game favorit Anda.
 
 ## Features
@@ -43,15 +45,21 @@ Untuk memulai dengan GameWiz, ikuti langkah-langkah berikut:
 5. Simpan game favorit Anda dan dapatkan rekomendasi yang dipersonalisasi.
 
 ## Screenshot
-<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/main_activity.png" width="200">
-<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/game_details.png" width="200">
-<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/community_profile.png" width="200">
-<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/user_profile.png" width="200">
-<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/community_post.png" width="200">
-<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/library_scene.png" width="200">
-<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/unauthorized.png" width="200">
-<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/profile.png" width="200">
 
+<div align="center">
+  <img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/main_activity.png" width="200">
+  <img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/game_details.png" width="200">
+  <img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/community_profile.png" width="200">
+</div>
+<div align="center">
+  <img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/user_profile.png" width="200">
+  <img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/community_post.png" width="200">
+  <img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/library_scene.png" width="200">
+</div>
+<div align="center">
+  <img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/unauthorized.png" width="200">
+  <img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/profile.png" width="200">
+</div>
 
 ## License
 
