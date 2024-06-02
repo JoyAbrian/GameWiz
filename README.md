@@ -43,14 +43,14 @@ Untuk memulai dengan GameWiz, ikuti langkah-langkah berikut:
 5. Simpan game favorit Anda dan dapatkan rekomendasi yang dipersonalisasi.
 
 ## Screenshot
-<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/main_activity.png">
-<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/game_details.png">
-<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/community_profile.png">
-<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/user_profile.png">
-<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/community_post.png">
-<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/library_scene.png">
-<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/unauthorized.png">
-<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/profile.png">
+<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/main_activity.png" width="200">
+<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/game_details.png" width="200">
+<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/community_profile.png" width="200">
+<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/user_profile.png" width="200">
+<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/community_post.png" width="200">
+<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/library_scene.png" width="200">
+<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/unauthorized.png" width="200">
+<img src="https://github.com/JoyAbrian/GameWiz/blob/main/docs/profile.png" width="200">
 
 
 ## License
