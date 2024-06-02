@@ -7,8 +7,7 @@ Welcome to **GameWiz**, your ultimate companion for discovering and exploring vi
 - **Comprehensive Game Database**: Access detailed information on thousands of games.
 - **Search Functionality**: Easily find games by title, genre, platform, and more.
 - **Trending Games**: Stay up-to-date with the latest and most popular games.
-- **Personalized Recommendations**: Get game suggestions based on your preferences.
-- **User Reviews and Ratings**: Read reviews and ratings from other gamers.
+- **Community Posts**: See gamers community activty around the world.
 
 ## Installation
 
